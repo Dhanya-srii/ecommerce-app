@@ -31,9 +31,7 @@ export const users = {
         throw new Error('Session expired');
       }
     },
-    logout({ commit }) {
-      console.log("logout");
-      
+    logout({ commit }) {     
       document.cookie =
         'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
       commit('clearUser');
