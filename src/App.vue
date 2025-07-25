@@ -1,32 +1,51 @@
 <template>
   <div id="app">
-    <img
-      alt="Vue logo"
-      src="./assets/logo.png"
-    />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <router-view />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue';
-
+import { mapActions } from 'vuex';
+import { ROUTE_NAMES } from './constants/Routes';
 export default {
-  name: 'App',
-  components: {
-    HelloWorld,
+  created() {
+    this.checkSession();
+  },
+  computed: {
+    isLoginPage() {
+      return this.$route.name === ROUTE_NAMES.LOGIN_PAGE;
+    },
+  },
+  methods: {
+    ...mapActions(['logout', 'getUser']),
+    async checkSession() {
+      try {
+        const token = document.cookie
+          .split('; ')
+          .find((ele) => ele.startsWith('accessToken='))
+          ?.split('=')[1];
+
+        if (!token) {
+          this.logout();
+          if (!this.isLoginPage) {
+            this.$router.push({ name: ROUTE_NAMES.LOGIN_PAGE });
+          }
+          return;
+        }
+
+        await this.getUser();
+        if (this.isLoginPage) {
+          this.$router.push({ name: ROUTE_NAMES.LOGOUT_PAGE });
+        }
+      } catch {
+        this.logout();
+        if (!this.isLoginPage) {
+          this.$router.push({ name: ROUTE_NAMES.LOGIN_PAGE });
+        }
+      }
+    },
   },
 };
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
-<style lang="scss" scoped src="./styles/styles.scss"></style>
+<style lang="scss"  src="./styles/styles.scss"></style>
