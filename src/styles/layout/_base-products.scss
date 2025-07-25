@@ -1,0 +1,19 @@
+.products {
+  flex-wrap: wrap;
+  margin-top: 32px;
+  width: 1600px;
+}
+
+.product-list {
+  min-width: 1700px;
+  height: calc(100vh - 70px);
+  overflow-y: scroll;
+}
+
+.product-status-message {
+  width: 100vw;
+  height: 90vh;
+  font-size: 32px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
