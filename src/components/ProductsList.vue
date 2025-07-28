@@ -23,7 +23,10 @@
         </select>
       </div>
     </div>
-
+    <product-specifications
+      v-if="listProducts.length"
+      :totalProducts="listProducts.length"
+    />
     <div
       v-if="listProducts.length > 0"
       class="products display-flex justify-content-start"
@@ -47,11 +50,13 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 import ProductCard from './ProductCard.vue';
+import ProductSpecifications from './ProductSpecifications.vue';
 
 export default {
   name: 'ProductListing',
   components: {
     ProductCard,
+    ProductSpecifications,
   },
   computed: {
     ...mapState({
