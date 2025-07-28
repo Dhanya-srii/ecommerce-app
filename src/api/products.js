@@ -2,10 +2,10 @@ import axios from 'axios';
 import { parseProducts } from './parser';
 
 export const products = {
-  /**
-   * retrieves product data
-   * @returns returns product data
-   */
+/**
+ * retrieves a list of all products.
+ * @returns A list containing data of all available products.
+ */
 
   async fetchAllProducts() {
     let BASE_URL = 'https://dummyjson.com/products';
