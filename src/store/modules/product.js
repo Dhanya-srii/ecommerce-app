@@ -1,0 +1,22 @@
+import { products } from '/src/api/products.js';
+export const storeProducts = {
+  state: {
+    productData: [],
+  },
+  mutations: {
+    setProductData(state, products) {
+      state.productData = products;
+    },
+  },
+  actions: {
+    async getAllProducts({ state, commit }) {
+      try {
+        const { data } = await products.fetchAllProducts();
+        commit('setProductData', data);
+        return state.allProducts;
+      } catch (err) {
+        alert('Error loading products: ' + err.message);
+      }
+    },
+  },
+};
