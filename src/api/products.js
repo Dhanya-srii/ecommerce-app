@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { parseProducts } from './parser';
+import { parseProduct } from './parser';
 
 export const products = {
 /**
@@ -13,7 +13,7 @@ export const products = {
     try {
       const { data } = await axios.get(BASE_URL);
       return {
-        data: data.products.map(parseProducts),
+        data: data.products.map(parseProduct),
         total: data.total,
       };
     } catch (err) {
