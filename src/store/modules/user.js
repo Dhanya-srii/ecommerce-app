@@ -1,5 +1,6 @@
 import { user } from '@/api/user';
 export const users = {
+  namespaced: true,
   state: {
     userData: null,
     refreshToken: '',
@@ -31,7 +32,7 @@ export const users = {
         throw new Error('Session expired');
       }
     },
-    logout({ commit }) {     
+    logout({ commit }) {
       document.cookie =
         'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
       commit('clearUser');
