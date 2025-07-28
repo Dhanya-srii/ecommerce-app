@@ -55,12 +55,14 @@ export default {
       errorMessage: '',
     };
   },
+
   methods: {
-    ...mapActions(['startSessionTimeout']),
-    ...mapMutations(['setUser']),
+    ...mapActions('users',['startSessionTimeout']),
+    ...mapMutations('users',['setUser']),
     async loginUserHandler() {
       try {
         const parsedUser = await user.loginUser(this.username, this.password);
+        
         this.setUser(parsedUser);
         
         this.startSessionTimeout(this.$router);
