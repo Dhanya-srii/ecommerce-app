@@ -2,13 +2,14 @@ import axios from 'axios';
 import { parseProduct } from './parser';
 
 export const products = {
-/**
- * retrieves a list of all products.
- * @returns A list containing data of all available products.
- */
+  /**
+   * retrieves product data by limit
+   * @param {Number} limitSkip
+   * @returns returns product data by limit
+   */
 
-  async fetchAllProducts() {
-    let BASE_URL = 'https://dummyjson.com/products';
+  async fetchAllProducts(limit, skip) {
+    let BASE_URL = `https://dummyjson.com/products?limit=${limit}&skip=${skip}`;
 
     try {
       const { data } = await axios.get(BASE_URL);
