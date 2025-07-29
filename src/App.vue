@@ -1,15 +1,20 @@
 <template>
   <div id="app">
+    <app-header />
     <router-view />
   </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex';
+import AppHeader from './components/AppHeader.vue';
 import { ROUTE_NAMES } from './constants/Routes';
 export default {
   created() {
     this.checkSession();
+  },
+  components: {
+    AppHeader,
   },
   computed: {
     isLoginPage() {
@@ -17,7 +22,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['logout', 'getUser']),
+    ...mapActions('users', ['logout', 'getUser']),
     async checkSession() {
       try {
         const token = document.cookie
@@ -35,7 +40,7 @@ export default {
 
         await this.getUser();
         if (this.isLoginPage) {
-          this.$router.push({ name: ROUTE_NAMES.LOGOUT_PAGE });
+          this.$router.push({ name: ROUTE_NAMES.PRODUCTS });
         }
       } catch {
         this.logout();
@@ -48,4 +53,4 @@ export default {
 };
 </script>
 
-<style lang="scss"  src="./styles/styles.scss"></style>
+<style lang="scss" src="./styles/styles.scss"></style>
