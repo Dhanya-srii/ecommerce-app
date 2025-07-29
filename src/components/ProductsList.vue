@@ -60,7 +60,7 @@ export default {
   },
   computed: {
     ...mapState({
-      productData: (state) => state.storeProducts.productData,
+      productData: (state) => state.product.productData,
     }),
     listProducts() {
       return this.productData;

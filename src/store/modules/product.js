@@ -1,5 +1,5 @@
 import { products } from '/src/api/products.js';
-export const storeProducts = {
+export const product = {
   state: {
     productData: [],
   },
