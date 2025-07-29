@@ -1,11 +1,11 @@
 import axios from 'axios';
-import { parseProducts } from './parser';
+import { parseProduct } from './parser';
 
 export const products = {
-  /**
-   * retrieves product data
-   * @returns returns product data
-   */
+/**
+ * retrieves a list of all products.
+ * @returns A list containing data of all available products.
+ */
 
   async fetchAllProducts() {
     let BASE_URL = 'https://dummyjson.com/products';
@@ -13,7 +13,7 @@ export const products = {
     try {
       const { data } = await axios.get(BASE_URL);
       return {
-        data: data.products.map(parseProducts),
+        data: data.products.map(parseProduct),
         total: data.total,
       };
     } catch (err) {
