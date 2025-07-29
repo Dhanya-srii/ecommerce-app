@@ -2,7 +2,8 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import { ROUTE_NAMES } from '@/constants/Routes';
 import LoginPage from '@/components/LoginPage.vue';
-import LogoutPage from '@/components/LogoutPage.vue';
+import ProductsList from '@/components/ProductsList.vue';
+
 Vue.use(VueRouter);
 const routes = [
   {
@@ -15,9 +16,9 @@ const routes = [
     name: ROUTE_NAMES.LOGIN_PAGE,
   },
   {
-    path: '/logout',
-    component: LogoutPage,
-    name: ROUTE_NAMES.LOGOUT_PAGE,
+    path: '/products',
+    component: ProductsList,
+    name: ROUTE_NAMES.PRODUCTS,
   },
 ];
 
