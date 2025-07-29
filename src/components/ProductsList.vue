@@ -51,12 +51,16 @@
 import { mapState, mapActions } from 'vuex';
 import ProductCard from './ProductCard.vue';
 import ProductSpecifications from './ProductSpecifications.vue';
-
+// directives
+import { lazy } from '/src/directives/lazy.js';
 export default {
   name: 'ProductListing',
   components: {
     ProductCard,
     ProductSpecifications,
+  },
+  directives: {
+    lazy: lazy,
   },
   computed: {
     ...mapState({
