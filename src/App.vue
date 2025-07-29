@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <app-header />
+    <app-header v-if="!canShowHeader" />
     <router-view />
   </div>
 </template>
@@ -19,6 +19,9 @@ export default {
   computed: {
     isLoginPage() {
       return this.$route.name === ROUTE_NAMES.LOGIN_PAGE;
+    },
+    canShowHeader() {
+      return ROUTE_NAMES.LOGIN_PAGE.includes(this.$route.name);
     },
   },
   methods: {
