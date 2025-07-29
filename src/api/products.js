@@ -22,4 +22,20 @@ export const products = {
       throw new Error(err.message);
     }
   },
+  /**
+   * retrieves the product data by price
+   * @param {string} sort
+   * @returns returns the product data by price .
+   */
+
+  async fetchProductsByPrice(sort) {
+    try {
+      const { data } = await axios.get(
+        `https://dummyjson.com/products?sortBy=title&order=${sort}`
+      );
+      return { data: data.products.map(parseProduct) };
+    } catch (err) {
+      throw new Error(err.message);
+    }
+  },
 };
