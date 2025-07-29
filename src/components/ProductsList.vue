@@ -10,7 +10,11 @@
       >
         <button class="filter-sort-panel-button">
           <span>FILTERS</span><i class="ri-equalizer-3-line"></i></button
-        ><select class="select-product">
+        ><select
+          class="select-product"
+          v-model="selectedOption"
+          @change="handleOptionChange"
+        >
           <option
             value=""
             disabled
@@ -48,15 +52,20 @@
   </div>
 </template>
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions, mapMutations } from 'vuex';
 import ProductCard from './ProductCard.vue';
 import ProductSpecifications from './ProductSpecifications.vue';
-
+import { products } from '/src/api/products.js';
 export default {
   name: 'ProductListing',
   components: {
     ProductCard,
     ProductSpecifications,
+  },
+  data() {
+    return {
+      selectedOption: '',
+    };
   },
   computed: {
     ...mapState({
@@ -75,7 +84,24 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(['setTotalProducts', 'setProductData']),
     ...mapActions(['getAllProducts']),
+
+    async handleOptionChange() {
+      try {
+        if (!this.selectedOption) return;
+        if (this.selectedOption === 'latest') {
+          return this.getAllProducts();
+        }
+        const sortedProducts = await products.fetchProductsByPrice(
+          this.selectedOption
+        );
+        this.setTotalProducts(sortedProducts.length);
+        this.setProductData(sortedProducts.data);
+      } catch (err) {
+        alert('Error fetching sorted products:', err.message);
+      }
+    },
   },
 };
 </script>
