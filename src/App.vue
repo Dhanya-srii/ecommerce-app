@@ -25,7 +25,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions('users', ['logout', 'getUser']),
+    ...mapActions(['logout', 'getUser']),
     async checkSession() {
       try {
         const token = document.cookie
