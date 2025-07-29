@@ -1,6 +1,6 @@
 import { user } from '@/api/user';
 export const users = {
-  namespaced: true,
+  // namespaced: true,
   state: {
     userData: null,
     refreshToken: '',

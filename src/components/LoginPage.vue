@@ -57,8 +57,8 @@ export default {
   },
 
   methods: {
-    ...mapActions('users',['startSessionTimeout']),
-    ...mapMutations('users',['setUser']),
+    ...mapActions(['startSessionTimeout']),
+    ...mapMutations(['setUser']),
     async loginUserHandler() {
       try {
         const parsedUser = await user.loginUser(this.username, this.password);
