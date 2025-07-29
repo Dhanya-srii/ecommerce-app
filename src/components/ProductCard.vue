@@ -8,6 +8,7 @@
         <img
           class="product-image display-block"
           alt="Product image"
+          :src="productData.images[0]"
         />
       </div>
 
