@@ -7,6 +7,9 @@ export const product = {
     setProductData(state, products) {
       state.productData = products;
     },
+    setTotalProducts(state, total) {
+      state.totalProducts = total;
+    },
   },
   actions: {
     async getAllProducts({ state, commit }) {
