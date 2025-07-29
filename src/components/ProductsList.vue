@@ -3,32 +3,10 @@
     class="product-list display-flex align-items-center flex-direction-column"
   >
     <div
-      class="filter-sort-panel display-flex align-items-center justify-content-center"
-    >
-      <div
-        class="sub-filter-sort-panel display-flex align-items-center justify-content-space-between"
-      >
-        <button class="filter-sort-panel-button">
-          <span>FILTERS</span><i class="ri-equalizer-3-line"></i></button
-        ><select class="select-product">
-          <option
-            value=""
-            disabled
-          >
-            SORT BY
-          </option>
-          <option value="asc">Price Low To High</option>
-          <option value="desc">Price High To Low</option>
-          <option value="latest">Latest</option>
-        </select>
-      </div>
-    </div>
-
-    <div
       v-if="listProducts.length > 0"
       class="products display-flex justify-content-start"
     >
-      <product-card
+      <product-cards
         v-for="(product, index) in listProducts"
         :key="index"
         :productData="product"
@@ -74,18 +52,3 @@ export default {
   },
 };
 </script>
-<style scoped lang="scss">
-.filter-sort-panel {
-  padding: 1rem 2rem;
-  width: 100vw;
-  border-bottom: 1px solid rgb(194, 192, 192);
-
-  option {
-    font-size: 14px;
-  }
-}
-
-.sub-filter-sort-panel {
-  min-width: 1600px;
-}
-</style>
