@@ -75,7 +75,7 @@ export const products = {
         );
         const products = response.data.products;
         totalProducts += products.length;
-        allProducts.push(...products.map(parseProducts));
+        allProducts.push(...products.map(parseProduct));
       }
       return { products: allProducts, totalProducts };
     } catch (err) {
