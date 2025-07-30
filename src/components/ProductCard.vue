@@ -8,7 +8,7 @@
         <img
           class="product-image display-block"
           alt="Product image"
-          :src="productData.images[0]"
+          :src="productList.images[0]"
         />
       </div>
 
@@ -19,9 +19,9 @@
           class="sub-product-info display-flex align-items-start justify-content-space-between"
         >
           <p class="product-card-title">
-            {{ productData.title }}
+            {{ productList.title }}
           </p>
-          <p class="card-price">${{ productData.price }}</p>
+          <p class="card-price">${{ productList.price }}</p>
         </div>
         <div></div>
       </div>
@@ -32,7 +32,7 @@
 export default {
   name: 'ProductCard',
   props: {
-    productData: {
+    productList: {
       type: Object,
       required: true,
     },
