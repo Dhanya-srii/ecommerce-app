@@ -31,8 +31,6 @@ export const product = {
       );
     },
     toggleFilter(state) {
-      console.log(state.showFilter);
-
       state.showFilter = !state.showFilter;
     },
   },
@@ -56,7 +54,7 @@ export const product = {
       }
     },
     async getAllProductsByCategories({ state, commit, dispatch }) {
-      if (!state.selectedCategories.length) {
+      if (state.selectedCategories.length === 0) {
         commit('resetProductsList');
         dispatch('getAllProducts');
         return;
