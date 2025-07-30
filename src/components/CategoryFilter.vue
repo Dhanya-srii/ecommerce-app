@@ -95,7 +95,7 @@ export default {
       'clearSelectedCategories',
       'toggleFilter',
     ]),
-    ...mapActions(['getAllProductsByCategories']),
+    ...mapActions([ 'getAllProductsByCategories']),
 
     applyFilters() {
       this.setSelectedCategories(this.originalCategoriesLocal);
@@ -107,7 +107,6 @@ export default {
       this.originalCategoriesLocal = [];
       this.clearSelectedCategories();
       this.getAllProductsByCategories();
-      this.getAllProducts();
     },
   },
 };
