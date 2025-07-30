@@ -85,13 +85,18 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['setTotalProducts', 'setProductData']),
+    ...mapMutations([
+      'setTotalProducts',
+      'setProductData',
+      'resetProductsList',
+    ]),
     ...mapActions(['getAllProducts']),
 
     async handleOptionChange() {
       try {
         if (!this.selectedOption) return;
         if (this.selectedOption === 'latest') {
+          this.resetProductsList();
           return this.getAllProducts();
         }
         const sortedProducts = await products.fetchProductsByPrice(
