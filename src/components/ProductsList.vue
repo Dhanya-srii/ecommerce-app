@@ -1,5 +1,6 @@
 <template>
   <div
+    v-lazy:30="getAllProducts"
     class="product-list display-flex align-items-center flex-direction-column"
   >
     <div
@@ -58,6 +59,7 @@ export default {
     ProductCard,
     ProductSpecifications,
   },
+
   computed: {
     ...mapState({
       productData: (state) => state.product.productData,

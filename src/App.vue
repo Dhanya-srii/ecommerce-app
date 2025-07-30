@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapMutations } from 'vuex';
 import AppHeader from './components/AppHeader.vue';
 import { ROUTE_NAMES } from './constants/Routes';
 export default {
@@ -15,6 +15,17 @@ export default {
   },
   components: {
     AppHeader,
+  },
+  watch: {
+    '$route.name': {
+      handler(to) {
+        if (to != ROUTE_NAMES.PRODUCTS) {
+          this.resetProductsList();
+        }
+      },
+      deep: true,
+      immediate: true,
+    },
   },
   computed: {
     isLoginPage() {
@@ -25,6 +36,8 @@ export default {
     },
   },
   methods: {
+    ...mapMutations(['resetProductsList']),
+
     ...mapActions(['logout', 'getUser']),
     async checkSession() {
       try {
