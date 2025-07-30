@@ -23,17 +23,20 @@
         <div class="filters-panel-body display-flex flex-direction-column">
           <p class="custom">Category</p>
 
-          <div
-            v-for="(category, index) in categoryList"
-            :key="index"
-          >
-            <el-checkbox
-              :label="category.slug"
-              v-model="originalCategoriesLocal"
-              class="custom"
+          <div>
+            <el-checkbox-group
+              class="checkbox-group display-flex flex-direction-column"
+              v-model="selectedCategories"
             >
-              {{ category.slug }}
-            </el-checkbox>
+              <el-checkbox
+                v-for="(category, index) in categoryList"
+                :key="index"
+                :label="category.slug"
+                class="custom"
+              >
+                {{ category.slug }}
+              </el-checkbox>
+            </el-checkbox-group>
           </div>
         </div>
 
@@ -42,7 +45,7 @@
         >
           <button
             class="clear-all"
-            v-if="originalCategories.length > 0"
+            v-if="cachedCategories.length > 0"
             @click="clearFilters"
           >
             <span>Clear All</span>
@@ -67,23 +70,23 @@ export default {
   data() {
     return {
       categoryList: [],
-      originalCategoriesLocal: [],
+      selectedCategories: [],
     };
   },
 
   computed: {
     ...mapState({
       showFilter: (state) => state.product.showFilter,
-      originalCategories: (state) => state.product.selectedCategories,
+      cachedCategories: (state) => state.product.selectedCategories,
     }),
     ...mapGetters(['isLoggedIn']),
   },
 
   async created() {
     try {
-      const categoryData = await products.fetchCategoryNames();
-      this.categoryList = categoryData;
-      this.originalCategoriesLocal = [...this.originalCategories];
+      const categoryData = await products.fetchCategory();
+      this.categoryList = categoryData.data;
+      this.selectedCategories = [...this.cachedCategories];
     } catch (err) {
       alert('Error loading products: ' + err.message);
     }
@@ -98,13 +101,13 @@ export default {
     ...mapActions([ 'getAllProductsByCategories']),
 
     applyFilters() {
-      this.setSelectedCategories(this.originalCategoriesLocal);
+      this.setSelectedCategories(this.selectedCategories);
       this.toggleFilter();
       this.getAllProductsByCategories();
     },
 
     clearFilters() {
-      this.originalCategoriesLocal = [];
+      this.selectedCategories = [];
       this.clearSelectedCategories();
       this.getAllProductsByCategories();
     },
