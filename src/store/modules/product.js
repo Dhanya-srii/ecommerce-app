@@ -2,7 +2,6 @@ import { products } from '/src/api/products.js';
 export const product = {
   state: {
     productData: [],
-    allProducts: [],
     limit: 30,
     totalProducts: 0,
   },
@@ -13,24 +12,24 @@ export const product = {
     resetProductsList(state) {
       state.limit = 30;
       state.totalProducts = 0;
-      state.allProducts = [];
+      state.productData = [];
     },
   },
   actions: {
     async getAllProducts({ state, commit }) {
       try {
-        const currentLength = state.allProducts.length;
+        const currentLength = state.productData.length;
         if (currentLength < state.totalProducts || state.totalProducts === 0) {
           const { data: productsList } = await products.fetchAllProducts(
             state.limit,
             currentLength
           );
-          state.allProducts = state.allProducts.concat(productsList);
+          state.productData = state.productData.concat(productsList);
 
-          commit('setProductData', state.allProducts);
+          commit('setProductData', state.productData);
         }
 
-        return state.allProducts;
+        return state.productData;
       } catch (err) {
         alert('Error loading products: ' + err.message);
       }
