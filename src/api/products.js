@@ -44,13 +44,12 @@ export const products = {
    * @returns {Promise<String[]>} A promise that resolves to an array of category names (strings).
    */
 
-  async fetchCategoryNames() {
+  async fetchCategory() {
     try {
-      const response = await axios.get(
+      const { data } = await axios.get(
         'https://dummyjson.com/products/categories'
       );
-
-      return response.data;
+      return { data: data };
     } catch (err) {
       throw new Error(err.message);
     }
@@ -65,19 +64,19 @@ export const products = {
    * for the given categories.
    */
   async fetchProductsCategories(categoryList) {
-    const allProducts = [];
+    const productList = [];
     let totalProducts = 0;
 
     try {
       for (const category of categoryList) {
-        const response = await axios.get(
+        const { data } = await axios.get(
           `https://dummyjson.com/products/category/${category}`
         );
-        const products = response.data.products;
+        const products = data.products;
         totalProducts += products.length;
-        allProducts.push(...products.map(parseProduct));
+        productList.push(...products.map(parseProduct));
       }
-      return { products: allProducts, totalProducts };
+      return { products: productList, totalProducts };
     } catch (err) {
       throw new Error(err.message);
     }
