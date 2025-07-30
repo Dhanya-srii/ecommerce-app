@@ -1,13 +1,16 @@
 <template>
   <div id="app">
     <app-header v-if="!canShowHeader" />
+    <category-filter v-if="showFilter" />
     <router-view />
   </div>
 </template>
 
 <script>
-import { mapActions, mapMutations } from 'vuex';
+import { mapActions, mapMutations, mapState } from 'vuex';
 import AppHeader from './components/AppHeader.vue';
+import CategoryFilter from './components/CategoryFilter.vue';
+
 import { ROUTE_NAMES } from './constants/Routes';
 export default {
   created() {
@@ -15,6 +18,7 @@ export default {
   },
   components: {
     AppHeader,
+    CategoryFilter,
   },
   watch: {
     '$route.name': {
@@ -28,6 +32,9 @@ export default {
     },
   },
   computed: {
+    ...mapState({
+      showFilter: (state) => state.product.showFilter,
+    }),
     isLoginPage() {
       return this.$route.name === ROUTE_NAMES.LOGIN_PAGE;
     },
