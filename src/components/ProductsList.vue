@@ -28,17 +28,17 @@
       </div>
     </div>
     <product-specifications
-      v-if="listProducts.length"
+      v-if="listProducts.length > 0"
       :totalProducts="listProducts.length"
     />
     <div
-      v-if="selectedCategories.length"
+      v-if="selectedCategories.length > 0"
       class="filters display-flex justify-content-center"
     >
       <div class="filter-container display-flex">
         <button
           v-for="(category, index) in selectedCategories"
-          :key="'Cat-' + index"
+          :key="'Category-' + index"
           class="filter-pill display-flex align-items-center justify-content-space-between"
         >
           <span>{{ category }}</span>
@@ -53,7 +53,6 @@
 
       <button
         class="clear-filters display-flex align-items-center justify-content-space-between"
-        v-if="selectedCategories.length > 0"
         @click="clearAllFilters()"
       >
         <span>Clear All</span> <i class="ri-close-circle-line"></i>
@@ -66,7 +65,7 @@
       <product-card
         v-for="(product, index) in listProducts"
         :key="index"
-        :productList="product"
+        :productData="product"
       />
     </div>
     <div v-else>
@@ -94,7 +93,6 @@ export default {
     ...mapState({
       productList: (state) => state.product.productList,
       selectedCategories: (state) => state.product.selectedCategories,
-      showFilter: (state) => state.product.showFilter,
     }),
     listProducts() {
       return this.productList;
