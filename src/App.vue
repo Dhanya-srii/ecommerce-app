@@ -19,7 +19,7 @@ export default {
   watch: {
     '$route.name': {
       handler(to) {
-        if (to != 'ProductList') {
+        if (to != ROUTE_NAMES.PRODUCTS) {
           this.resetProductsList();
         }
       },
