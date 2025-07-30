@@ -3,9 +3,10 @@ import { parseProduct } from './parser';
 
 export const products = {
   /**
-   * retrieves product data by limit
-   * @param {Number} limitSkip
-   * @returns returns product data by limit
+   * retrieves a paginated list of product data.
+   * @param {Number} limit The maximum number of products to return.
+   * @param {Number} skip The number of products to skip from the beginning of the list.
+   * @returns {Promise<Object[]>} A promise that resolves to an array of product objects.
    */
 
   async fetchAllProducts(limit, skip) {
