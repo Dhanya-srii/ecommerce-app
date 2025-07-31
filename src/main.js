@@ -3,10 +3,12 @@ import App from './App.vue';
 import router from './route';
 import store from './store';
 import { lazy } from './directives/lazy';
+import { Option, Select } from 'element-ui';
 
 Vue.config.productionTip = false;
 Vue.directive('lazy', lazy);
-
+Vue.use(Select);
+Vue.use(Option);
 new Vue({
   render: (h) => h(App),
   router,
