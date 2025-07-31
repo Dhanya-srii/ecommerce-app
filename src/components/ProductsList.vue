@@ -21,10 +21,10 @@
           placeholder="SORT BY"
         >
           <el-option
-            v-for="(item, index) in sortingOption"
+            v-for="(option, index) in sortingOption"
             :key="index"
-            :label="item.label"
-            :value="item.value"
+            :label="option.label"
+            :value="option.value"
           ></el-option>
         </el-select>
       </div>
