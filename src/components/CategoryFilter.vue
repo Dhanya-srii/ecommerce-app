@@ -76,7 +76,6 @@ export default {
 
   computed: {
     ...mapState({
-      showFilter: (state) => state.product.showFilter,
       cachedCategories: (state) => state.product.selectedCategories,
     }),
     ...mapGetters(['isLoggedIn']),
