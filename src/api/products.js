@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { parseProduct } from './parser';
-
+const BASE_URL = 'https://dummyjson.com/products';
 export const products = {
   /**
    * retrieves a paginated list of product data.
@@ -10,10 +10,10 @@ export const products = {
    */
 
   async fetchAllProducts(limit, skip) {
-    let BASE_URL = `https://dummyjson.com/products?limit=${limit}&skip=${skip}`;
+    let PRODUCT_URL = `${BASE_URL}?limit=${limit}&skip=${skip}`;
 
     try {
-      const { data } = await axios.get(BASE_URL);
+      const { data } = await axios.get(PRODUCT_URL);
       return {
         data: data.products.map(parseProduct),
         total: data.total,
@@ -31,7 +31,7 @@ export const products = {
   async fetchProductsByPrice(sort) {
     try {
       const { data } = await axios.get(
-        `https://dummyjson.com/products?sortBy=title&order=${sort}`
+        `${BASE_URL}?sortBy=title&order=${sort}`
       );
       return { data: data.products.map(parseProduct) };
     } catch (err) {
@@ -46,9 +46,7 @@ export const products = {
 
   async fetchCategory() {
     try {
-      const { data } = await axios.get(
-        'https://dummyjson.com/products/categories'
-      );
+      const { data } = await axios.get(`${BASE_URL}/categories`);
       return data;
     } catch (err) {
       throw new Error(err.message);
@@ -69,9 +67,7 @@ export const products = {
 
     try {
       for (const category of categoryList) {
-        const { data } = await axios.get(
-          `https://dummyjson.com/products/category/${category}`
-        );
+        const { data } = await axios.get(`${BASE_URL}/category/${category}`);
         const products = data.products;
         totalProducts += products.length;
         productList.push(...products.map(parseProduct));
