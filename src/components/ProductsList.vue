@@ -11,17 +11,17 @@
       >
         <button class="filter-sort-panel-button">
           <span>FILTERS</span><i class="ri-equalizer-3-line"></i></button
-        ><select class="select-product">
-          <option
-            value=""
-            disabled
-          >
-            SORT BY
-          </option>
-          <option value="asc">Price Low To High</option>
-          <option value="desc">Price High To Low</option>
-          <option value="latest">Latest</option>
-        </select>
+        ><el-select
+          class="select-product"
+          v-model="selectedOption"
+          @change="handleOptionChange"
+          placeholder="SORT BY"
+        >
+       
+          <el-option value="asc" label="Price Low To High">Price Low To High</el-option>
+          <el-option value="desc" label="Price High To Low">Price High To Low</el-option>
+          <el-option value="latest" label="Latest">Latest</el-option>
+        </el-select>
       </div>
     </div>
     <product-specifications
@@ -49,17 +49,21 @@
   </div>
 </template>
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions, mapMutations } from 'vuex';
 import ProductCard from './ProductCard.vue';
 import ProductSpecifications from './ProductSpecifications.vue';
-
+import { products } from '/src/api/products.js';
 export default {
   name: 'ProductListing',
   components: {
     ProductCard,
     ProductSpecifications,
   },
-
+  data() {
+    return {
+      selectedOption: '',
+    };
+  },
   computed: {
     ...mapState({
       productData: (state) => state.product.productData,
@@ -77,7 +81,29 @@ export default {
     }
   },
   methods: {
+    ...mapMutations([
+      'setTotalProducts',
+      'setProductData',
+      'resetProductsList',
+    ]),
     ...mapActions(['getAllProducts']),
+
+    async handleOptionChange() {
+      if (this.selectedOption === 'latest') {
+        this.resetProductsList();
+        this.getAllProducts();
+      } else {
+        try {
+          const sortedProducts = await products.fetchProductsByPrice(
+            this.selectedOption
+          );
+          this.setTotalProducts(sortedProducts.length);
+          this.setProductData(sortedProducts.data);
+        } catch (err) {
+          alert('Error fetching sorted products:', err.message);
+        }
+      }
+    },
   },
 };
 </script>

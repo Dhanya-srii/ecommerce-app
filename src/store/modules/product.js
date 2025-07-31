@@ -9,6 +9,9 @@ export const product = {
     setProductData(state, products) {
       state.productData = products;
     },
+    setTotalProducts(state, total) {
+      state.totalProducts = total;
+    },
     resetProductsList(state) {
       state.limit = 30;
       state.totalProducts = 0;
