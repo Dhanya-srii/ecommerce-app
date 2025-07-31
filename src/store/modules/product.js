@@ -19,9 +19,7 @@ export const product = {
       state.totalProducts = 0;
       state.productList = [];
     },
-    setTotalProducts(state, total) {
-      state.totalProducts = total;
-    },
+
     setSelectedCategories(state, categories) {
       state.selectedCategories = categories;
     },
