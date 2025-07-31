@@ -49,7 +49,7 @@ export const products = {
       const { data } = await axios.get(
         'https://dummyjson.com/products/categories'
       );
-      return { data: data };
+      return data;
     } catch (err) {
       throw new Error(err.message);
     }
