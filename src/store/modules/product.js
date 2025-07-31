@@ -11,6 +11,9 @@ export const product = {
     setProductList(state, products) {
       state.productList = products;
     },
+    setTotalProducts(state, total) {
+      state.totalProducts = total;
+    },
     resetProductsList(state) {
       state.limit = 30;
       state.totalProducts = 0;

@@ -4,6 +4,31 @@
 .custom {
   font-size: 18px;
   font-weight: 300;
+  color: $basic-color;
+  text-transform: capitalize;
+}
+
+.select-product {
+  ::placeholder {
+    color: black;
+  }
+}
+
+.el-select .el-input.is-focus .el-input__inner {
+  border-color: #060606;
+}
+
+.el-select .el-input__inner:focus {
+  border-color: #060606;
+}
+
+.el-select-dropdown__item.selected {
+  color: #060606;
+}
+.custom.el-checkbox>.el-checkbox__label,
+.custom {
+  font-size: 18px;
+  font-weight: 300;
   color: rgb(82, 81, 81);
   text-transform: capitalize;
 }
