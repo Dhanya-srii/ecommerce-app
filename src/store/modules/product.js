@@ -1,11 +1,25 @@
+import Vue from 'vue';
 import { products } from '/src/api/products.js';
 export const product = {
   state: {
+    favouritesList: JSON.parse(localStorage.getItem('favouritesList')) || {},
     productData: [],
     limit: 30,
     totalProducts: 0,
   },
   mutations: {
+    updateFavList(state, product) {
+      const id = product.id;
+      if (state.favouritesList[id]) {
+        Vue.delete(state.favouritesList, id);
+      } else {
+        Vue.set(state.favouritesList, id, product);
+      }
+      localStorage.setItem(
+        'favouritesList',
+        JSON.stringify(state.favouritesList)
+      );
+    },
     setProductData(state, products) {
       state.productData = products;
     },
@@ -17,6 +31,9 @@ export const product = {
       state.totalProducts = 0;
       state.productData = [];
     },
+  },
+  getters: {
+    hasFavourites: (state) => Object.keys(state.favouritesList).length,
   },
   actions: {
     async getAllProducts({ state, commit }) {
