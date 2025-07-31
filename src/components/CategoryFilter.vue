@@ -34,7 +34,6 @@
                 :label="category.slug"
                 class="custom"
               >
-                {{ category.slug }}
               </el-checkbox>
             </el-checkbox-group>
           </div>
