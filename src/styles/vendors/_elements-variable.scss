@@ -1,26 +1,44 @@
 @import url('//unpkg.com/element-ui@2.15.14/lib/theme-chalk/index.css');
 
- .custom.el-checkbox>.el-checkbox__label,
- .custom {
-   font-size: 18px;
-   font-weight: 300;
-   color: $basic-color;
-   text-transform: capitalize;
- }
+.custom.el-checkbox>.el-checkbox__label,
+.custom {
+  font-size: 18px;
+  font-weight: 300;
+  color: $basic-color;
+  text-transform: capitalize;
+}
 
- .custom.el-checkbox>.el-checkbox__input>.el-checkbox__inner {
-   font-size: 23px;
- }
+.select-product {
+  ::placeholder {
+    color: black;
+  }
+}
 
- .custom.el-checkbox>.el-checkbox__input>.el-checkbox__inner {
-   border-color: $primary-color;
+.el-select .el-input.is-focus .el-input__inner {
+  border-color: #060606;
+}
 
- }
+.el-select .el-input__inner:focus {
+  border-color: #060606;
+}
 
- .custom.el-checkbox>.el-checkbox__input.is-checked+.el-checkbox__label {
-   color: $basic-color;
- }
+.el-select-dropdown__item.selected {
+  color: #060606;
+}
 
- .custom.el-checkbox>.el-checkbox__input.is-checked .el-checkbox__inner {
-   background-color: $primary-color;
- }
+.custom.el-checkbox>.el-checkbox__input>.el-checkbox__inner {
+  font-size: 23px;
+}
+
+.custom.el-checkbox>.el-checkbox__input>.el-checkbox__inner {
+  border-color: $primary-color;
+
+}
+
+.custom.el-checkbox>.el-checkbox__input.is-checked+.el-checkbox__label {
+  color: $basic-color;
+}
+
+.custom.el-checkbox>.el-checkbox__input.is-checked .el-checkbox__inner {
+  background-color: $primary-color;
+}
