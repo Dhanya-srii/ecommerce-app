@@ -21,26 +21,17 @@
           placeholder="SORT BY"
         >
           <el-option
-            value="asc"
-            label="Price Low To High"
-            >Price Low To High</el-option
-          >
-          <el-option
-            value="desc"
-            label="Price High To Low"
-            >Price High To Low</el-option
-          >
-          <el-option
-            value="latest"
-            label="Latest"
-            >Latest</el-option
-          >
+            v-for="(item, index) in sortingOption"
+            :key="index"
+            :label="item.label"
+            :value="item.value"
+          ></el-option>
         </el-select>
       </div>
     </div>
     <product-specifications
-      v-if="listProducts.length > 0"
-      :totalProducts="listProducts.length"
+      v-if="productList.length > 0"
+      :totalProducts="productList.length"
     />
     <div
       v-if="selectedCategories.length > 0"
@@ -70,11 +61,11 @@
       </button>
     </div>
     <div
-      v-if="listProducts.length > 0"
+      v-if="productList.length > 0"
       class="products display-flex justify-content-start"
     >
       <product-card
-        v-for="(product, index) in listProducts"
+        v-for="(product, index) in productList"
         :key="index"
         :productData="product"
       />
@@ -102,6 +93,20 @@ export default {
   data() {
     return {
       selectedOption: '',
+      sortingOption: [
+        {
+          value: 'asc',
+          label: 'Price Low To High',
+        },
+        {
+          value: 'desc',
+          label: 'Price High To Low',
+        },
+        {
+          value: 'latest',
+          label: 'Latest',
+        },
+      ],
     };
   },
   computed: {
@@ -109,9 +114,6 @@ export default {
       productList: (state) => state.product.productList,
       selectedCategories: (state) => state.product.selectedCategories,
     }),
-    listProducts() {
-      return this.productList;
-    },
   },
 
   async created() {
