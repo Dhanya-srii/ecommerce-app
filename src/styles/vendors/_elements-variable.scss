@@ -10,16 +10,19 @@
 
 .select-product {
   ::placeholder {
-    color: black;
+    color: #000000;
   }
 }
 
-.el-select .el-input.is-focus .el-input__inner {
-  border-color: #060606;
+
+.el-select .el-input.is-focus .el-input__inner,
+.el-select .el-input__inner,
+.el-select .el-input__inner:focus {
+  border-color: rgb(168, 164, 164);
 }
 
-.el-select .el-input__inner:focus {
-  border-color: #060606;
+.el-select .el-input__inner {
+  border-radius: 0px;
 }
 
 .el-select-dropdown__item.selected {
