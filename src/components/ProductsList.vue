@@ -11,21 +11,17 @@
       >
         <button class="filter-sort-panel-button">
           <span>FILTERS</span><i class="ri-equalizer-3-line"></i></button
-        ><select
+        ><el-select
           class="select-product"
           v-model="selectedOption"
           @change="handleOptionChange"
+          placeholder="SORT BY"
         >
-          <option
-            value=""
-            disabled
-          >
-            SORT BY
-          </option>
-          <option value="asc">Price Low To High</option>
-          <option value="desc">Price High To Low</option>
-          <option value="latest">Latest</option>
-        </select>
+       
+          <el-option value="asc" label="Price Low To High">Price Low To High</el-option>
+          <el-option value="desc" label="Price High To Low">Price High To Low</el-option>
+          <el-option value="latest" label="Latest">Latest</el-option>
+        </el-select>
       </div>
     </div>
     <product-specifications
@@ -93,19 +89,19 @@ export default {
     ...mapActions(['getAllProducts']),
 
     async handleOptionChange() {
-      try {
-        if (!this.selectedOption) return;
-        if (this.selectedOption === 'latest') {
-          this.resetProductsList();
-          return this.getAllProducts();
+      if (this.selectedOption === 'latest') {
+        this.resetProductsList();
+        this.getAllProducts();
+      } else {
+        try {
+          const sortedProducts = await products.fetchProductsByPrice(
+            this.selectedOption
+          );
+          this.setTotalProducts(sortedProducts.length);
+          this.setProductData(sortedProducts.data);
+        } catch (err) {
+          alert('Error fetching sorted products:', err.message);
         }
-        const sortedProducts = await products.fetchProductsByPrice(
-          this.selectedOption
-        );
-        this.setTotalProducts(sortedProducts.length);
-        this.setProductData(sortedProducts.data);
-      } catch (err) {
-        alert('Error fetching sorted products:', err.message);
       }
     },
   },
