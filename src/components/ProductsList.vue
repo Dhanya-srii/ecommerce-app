@@ -20,10 +20,21 @@
           @change="handleOptionChange"
           placeholder="SORT BY"
         >
-       
-          <el-option value="asc" label="Price Low To High">Price Low To High</el-option>
-          <el-option value="desc" label="Price High To Low">Price High To Low</el-option>
-          <el-option value="latest" label="Latest">Latest</el-option>
+          <el-option
+            value="asc"
+            label="Price Low To High"
+            >Price Low To High</el-option
+          >
+          <el-option
+            value="desc"
+            label="Price High To Low"
+            >Price High To Low</el-option
+          >
+          <el-option
+            value="latest"
+            label="Latest"
+            >Latest</el-option
+          >
         </el-select>
       </div>
     </div>
@@ -113,8 +124,10 @@ export default {
   methods: {
     ...mapMutations([
       'setTotalProducts',
-      'setProductData',
+      'setProductList',
       'resetProductsList',
+      'toggleFilter',
+      'removeOneSelectedCategory',
     ]),
     ...mapActions(['getAllProducts', 'getAllProductsByCategories']),
 
@@ -128,19 +141,13 @@ export default {
             this.selectedOption
           );
           this.setTotalProducts(sortedProducts.length);
-          this.setProductData(sortedProducts.data);
+          this.setProductList(sortedProducts.data);
         } catch (err) {
           alert('Error fetching sorted products:', err.message);
         }
       }
     },
-    ...mapMutations([
-      'setProductList',
-      'clearSelectedCategories',
-      'removeOneSelectedCategory',
-      'toggleFilter',
-      'setTotalProducts',
-    ]),
+
     clearAllFilters() {
       this.clearSelectedCategories();
       this.getAllProductsByCategories();
