@@ -85,8 +85,8 @@ export default {
   async created() {
     try {
       const categoryData = await products.fetchCategory();
-      this.categoryList = categoryData.data;
-      this.selectedCategories = [...this.cachedCategories];
+      this.categoryList = categoryData;
+      this.selectedCategories = this.cachedCategories;
     } catch (err) {
       alert('Error loading products: ' + err.message);
     }
@@ -98,7 +98,7 @@ export default {
       'clearSelectedCategories',
       'toggleFilter',
     ]),
-    ...mapActions([ 'getAllProductsByCategories']),
+    ...mapActions(['getAllProductsByCategories']),
 
     applyFilters() {
       this.setSelectedCategories(this.selectedCategories);
