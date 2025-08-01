@@ -13,11 +13,20 @@
           class="search-input"
           type="text"
           placeholder="SEARCH"
+          v-model.trim="searchQuery"
+          @keyup.enter="searchProduct"
         />
-        <button class="user-control-button">
+        <button
+          @click="searchProduct"
+          class="user-control-button"
+        >
           <i class="ri-search-line"></i>
         </button>
-        <button class="user-control-button">
+        <button
+          class="user-control-button"
+          v-if="showClear"
+          @click="clearSearch"
+        >
           <i
             class="ri-eraser-line"
             style="color: #f5f5f5"
@@ -43,7 +52,50 @@
     </div>
   </header>
 </template>
+<script>
+import { mapActions, mapMutations } from 'vuex';
 
+export default {
+  data() {
+    return {
+      searchQuery: '',
+      showClear: false,
+    };
+  },
+  methods: {
+    ...mapMutations([
+      'setProductList',
+      'resetProductsList',
+      'setSearchProduct',
+    ]),
+    ...mapActions(['getAllProducts', 'getSearchProducts']),
+    async searchProduct() {
+      if (!this.searchQuery) return;
+      try {
+        this.setSearchProduct(this.searchQuery);
+        this.resetProductsList();
+        const results = await this.getAllProducts();
+        this.setProductList(results);
+        this.showClear = true;
+      } catch (error) {
+        alert('Error Searching Product: ' + error.message);
+      }
+    },
+    async clearSearch() {
+      try {
+        this.searchQuery = '';
+        this.setSearchProduct('');
+        this.resetProductsList();
+        const results = await this.getAllProducts();
+        this.setProductList(results);
+        this.showClear = false;
+      } catch (error) {
+        alert('Error loading products: ' + error.message);
+      }
+    },
+  },
+};
+</script>
 <style lang="scss" scoped>
 @use '/src/styles/abstracts/_variables.scss' as *;
 
