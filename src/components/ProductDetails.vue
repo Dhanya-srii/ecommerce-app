@@ -53,10 +53,35 @@
         <div
           class="action-buttons display-flex align-items-center justify-content-start"
         >
-          <div>
-            <button class="addCart-details">Add to Cart</button>
+          <div v-if="!amount">
+            <button
+              class="addCart-details"
+              @click="updateCart(selectedProduct)"
+            >
+              Add to Cart
+            </button>
           </div>
+          <div
+            class="addCart-details display-flex align-items-center justify-content-space-between"
+            v-else
+          >
+            <button
+              class="counter-button"
+              @click="
+                updateCart({ id: selectedProduct.id, quantityChange: -1 })
+              "
+            >
+              -
+            </button>
 
+            <span>{{ amount }}</span>
+            <button
+              class="counter-button"
+              @click="updateCart({ id: selectedProduct.id, quantityChange: 1 })"
+            >
+              +
+            </button>
+          </div>
           <button
             class="fav-detail display-flex align-items-center justify-content-center"
           >
@@ -69,6 +94,7 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex';
 import { products } from '../api/products';
 import LoadingData from './LoadingData.vue';
 
@@ -88,8 +114,19 @@ export default {
   async created() {
     await this.getProductdata();
   },
-
+  computed: {
+    ...mapState({
+      cartProducts: (state) => state.product.cartData.products,
+    }),
+    amount() {
+      const product = this.cartProducts?.find(
+        (p) => p.id === this.selectedProduct.id
+      );
+      return product ? product.quantity : 0;
+    },
+  },
   methods: {
+    ...mapActions(['updateCart']),
     async getProductdata() {
       try {
         this.isLoading = true;
