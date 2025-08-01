@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import { ROUTE_NAMES } from '@/constants/Routes';
 import LoginPage from '@/components/LoginPage.vue';
 import ProductsList from '@/components/ProductsList.vue';
+import ProductDetails from '@/components/ProductDetails.vue';
 
 Vue.use(VueRouter);
 const routes = [
@@ -19,6 +20,11 @@ const routes = [
     path: '/products',
     component: ProductsList,
     name: ROUTE_NAMES.PRODUCTS,
+  },
+  {
+    path: '/product',
+    component: ProductDetails,
+    name: ROUTE_NAMES.PRODUCT_DETAIL,
   },
 ];
 
