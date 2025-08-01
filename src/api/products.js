@@ -10,10 +10,10 @@ export const products = {
    */
 
   async fetchAllProducts(limit, skip) {
-    let PRODUCT_URL = `${BASE_URL}?limit=${limit}&skip=${skip}`;
+    let productUrl = `${BASE_URL}?limit=${limit}&skip=${skip}`;
 
     try {
-      const { data } = await axios.get(PRODUCT_URL);
+      const { data } = await axios.get(productUrl);
       return {
         data: data.products.map(parseProduct),
         total: data.total,
