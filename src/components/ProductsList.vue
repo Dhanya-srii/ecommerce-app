@@ -9,7 +9,10 @@
       <div
         class="sub-filter-sort-panel display-flex align-items-center justify-content-space-between"
       >
-        <button class="filter-sort-panel-button">
+        <button
+          @click="toggleFilter()"
+          class="filter-sort-panel-button"
+        >
           <span>FILTERS</span><i class="ri-equalizer-3-line"></i></button
         ><el-select
           class="select-product"
@@ -17,28 +20,56 @@
           @change="handleOptionChange"
           placeholder="SORT BY"
         >
-       
-          <el-option value="asc" label="Price Low To High">Price Low To High</el-option>
-          <el-option value="desc" label="Price High To Low">Price High To Low</el-option>
-          <el-option value="latest" label="Latest">Latest</el-option>
+          <el-option
+            v-for="(option, index) in sortingOption"
+            :key="index"
+            :label="option.label"
+            :value="option.value"
+          ></el-option>
         </el-select>
       </div>
     </div>
     <product-specifications
-      v-if="listProducts.length"
-      :totalProducts="listProducts.length"
+      v-if="productList.length > 0"
+      :totalProducts="productList.length"
     />
     <div
-      v-if="listProducts.length > 0"
+      v-if="selectedCategories.length > 0"
+      class="filters display-flex justify-content-center"
+    >
+      <div class="filter-container display-flex">
+        <button
+          v-for="(category, index) in selectedCategories"
+          :key="'Category-' + index"
+          class="filter-pill display-flex align-items-center justify-content-space-between"
+        >
+          <span>{{ category }}</span>
+          <button
+            class="remove-filter"
+            @click="removeCategory(category)"
+          >
+            <i class="ri-close-line"></i>
+          </button>
+        </button>
+      </div>
+
+      <button
+        class="clear-filters display-flex align-items-center justify-content-space-between"
+        @click="clearAllFilters()"
+      >
+        <span>Clear All</span> <i class="ri-close-circle-line"></i>
+      </button>
+    </div>
+    <div
+      v-if="productList.length > 0"
       class="products display-flex justify-content-start"
     >
       <product-card
-        v-for="(product, index) in listProducts"
+        v-for="(product, index) in productList"
         :key="index"
         :productData="product"
       />
     </div>
-
     <div v-else>
       <p
         class="product-status-message display-flex justify-content-center align-items-center"
@@ -62,15 +93,27 @@ export default {
   data() {
     return {
       selectedOption: '',
+      sortingOption: [
+        {
+          value: 'asc',
+          label: 'Price Low To High',
+        },
+        {
+          value: 'desc',
+          label: 'Price High To Low',
+        },
+        {
+          value: 'latest',
+          label: 'Latest',
+        },
+      ],
     };
   },
   computed: {
     ...mapState({
-      productData: (state) => state.product.productData,
+      productList: (state) => state.product.productList,
+      selectedCategories: (state) => state.product.selectedCategories,
     }),
-    listProducts() {
-      return this.productData;
-    },
   },
 
   async created() {
@@ -83,10 +126,12 @@ export default {
   methods: {
     ...mapMutations([
       'setTotalProducts',
-      'setProductData',
+      'setProductList',
       'resetProductsList',
+      'toggleFilter',
+      'removeOneSelectedCategory',
     ]),
-    ...mapActions(['getAllProducts']),
+    ...mapActions(['getAllProducts', 'getAllProductsByCategories']),
 
     async handleOptionChange() {
       if (this.selectedOption === 'latest') {
@@ -98,16 +143,28 @@ export default {
             this.selectedOption
           );
           this.setTotalProducts(sortedProducts.length);
-          this.setProductData(sortedProducts.data);
+          this.setProductList(sortedProducts.data);
         } catch (err) {
           alert('Error fetching sorted products:', err.message);
         }
       }
     },
+
+    clearAllFilters() {
+      this.clearSelectedCategories();
+      this.getAllProductsByCategories();
+    },
+
+    removeCategory(category) {
+      this.removeOneSelectedCategory(category);
+      this.getAllProductsByCategories();
+    },
   },
 };
 </script>
 <style scoped lang="scss">
+@use '/src/styles/abstracts/_variables.scss' as *;
+
 .filter-sort-panel {
   padding: 1rem 2rem;
   width: 100vw;
@@ -117,8 +174,49 @@ export default {
     font-size: 14px;
   }
 }
+.filters {
+  background-color: $secondary-color;
+  padding: 16px 0px;
+  width: 1600px;
+}
 
+.filter-container {
+  overflow-x: auto;
+  flex-wrap: nowrap;
+  flex: 1;
+  gap: 8px;
+  padding-bottom: 4px;
+}
+.filter-pill,
+.clear-filters {
+  background-color: rgb(238, 238, 238);
+  padding: 0 18px;
+  white-space: nowrap;
+  text-transform: capitalize;
+  font-size: 14px;
+}
 .sub-filter-sort-panel {
   min-width: 1600px;
+}
+
+.remove-filter,
+.ri-close-circle-line {
+  background: none;
+  border: none;
+  font-weight: bold;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 4px;
+  font-weight: 300;
+  text-align: left;
+}
+
+.clear-filters {
+  flex-shrink: 0;
+  font-weight: 800;
+  background-color: $secondary-color;
+  cursor: pointer;
+  margin: 0px;
+  padding: 0px;
 }
 </style>
