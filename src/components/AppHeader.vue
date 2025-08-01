@@ -102,7 +102,7 @@ export default {
 
 .favourite-list-count {
   position: absolute;
-  background-color: $isFav;
+  background-color: $fav-color;
   border-radius: 50%;
   height: 25px;
   width: 25px;
