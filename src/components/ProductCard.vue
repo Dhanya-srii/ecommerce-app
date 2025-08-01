@@ -1,6 +1,9 @@
 <template>
   <div class="product-card display-flex justify-content-center">
-    <div class="product">
+    <div
+      class="product"
+      @click="goToProductDetail(productData.id)"
+    >
       <div class="image-container">
         <button class="fav-icon">
           <i class="ri-heart-line"></i>
@@ -29,12 +32,24 @@
   </div>
 </template>
 <script>
+import { ROUTE_NAMES } from '../constants/Routes';
+
 export default {
   name: 'ProductCard',
   props: {
     productData: {
       type: Object,
       required: true,
+    },
+  },
+  methods: {
+    goToProductDetail(id) {
+      this.$router.push({
+        name: ROUTE_NAMES.PRODUCT_DETAIL,
+        query: {
+          id,
+        },
+      });
     },
   },
 };
