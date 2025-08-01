@@ -24,11 +24,20 @@
           ></i>
         </button>
 
-        <button class="user-control-button">
+        <button
+          class="user-control-button"
+          @click="goToFavourites()"
+        >
           <i
             class="ri-heart-line"
             style="color: #f5f5f5"
           ></i>
+          <p
+            v-if="hasFavourites"
+            class="favourite-list-count"
+          >
+            {{ hasFavourites }}
+          </p>
         </button>
         <button class="user-control-button">
           <i
@@ -43,7 +52,25 @@
     </div>
   </header>
 </template>
+<script>
+import { mapGetters } from 'vuex';
+import { ROUTE_NAMES } from '@/constants/Routes';
 
+export default {
+  computed: {
+    ...mapGetters(['hasFavourites']),
+  },
+  methods: {
+    goToFavourites() {
+      if (this.$route.name !== ROUTE_NAMES.FAVOURITE_PRODUCTS) {
+        this.$router.push({
+          name: ROUTE_NAMES.FAVOURITE_PRODUCTS,
+        });
+      }
+    },
+  },
+};
+</script>
 <style lang="scss" scoped>
 @use '/src/styles/abstracts/_variables.scss' as *;
 
