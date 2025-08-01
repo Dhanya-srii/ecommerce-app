@@ -130,6 +130,7 @@ export default {
       'resetProductsList',
       'toggleFilter',
       'removeOneSelectedCategory',
+      'clearSelectedCategories'
     ]),
     ...mapActions(['getAllProducts', 'getAllProductsByCategories']),
 

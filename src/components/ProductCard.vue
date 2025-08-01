@@ -2,8 +2,11 @@
   <div class="product-card display-flex justify-content-center">
     <div class="product">
       <div class="image-container">
-        <button class="fav-icon">
-          <i class="ri-heart-line"></i>
+        <button
+          class="fav-icon"
+          @click.stop="updateFavList(productData)"
+        >
+          <i :class="[isFavourite ? 'ri-heart-fill' : 'ri-heart-line']"></i>
         </button>
         <img
           class="product-image display-block"
@@ -29,6 +32,7 @@
   </div>
 </template>
 <script>
+import { mapMutations, mapState } from 'vuex';
 export default {
   name: 'ProductCard',
   props: {
@@ -36,6 +40,18 @@ export default {
       type: Object,
       required: true,
     },
+  },
+  computed: {
+    ...mapState({
+      favouritesList: (state) => state.product.favouritesList,
+    }),
+
+    isFavourite() {
+      return !!this.favouritesList[this.productData.id];
+    },
+  },
+  methods: {
+    ...mapMutations(['updateFavList']),
   },
 };
 </script>
