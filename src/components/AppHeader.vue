@@ -30,11 +30,20 @@
             style="color: #f5f5f5"
           ></i>
         </button>
-        <button class="user-control-button">
+        <button
+          class="user-control-button"
+          @click="goToProductCart"
+        >
           <i
             class="ri-shopping-cart-line"
             style="color: #f5f5f5"
           ></i>
+          <p
+            v-if="getCartProductsQuantity"
+            class="favourite-list-count"
+          >
+            {{ getCartProductsQuantity }}
+          </p>
         </button>
         <button class="user-control-button">
           <i class="ri-logout-circle-r-line"></i>
@@ -43,7 +52,28 @@
     </div>
   </header>
 </template>
+<script>
+import { mapState } from 'vuex';
+import { ROUTE_NAMES } from '../constants/Routes';
 
+export default {
+  computed: {
+    ...mapState({
+      getCartProductsQuantity: (state) =>
+        state.product.cartData.totalQuantity,
+    }),
+  },
+  methods: {
+    goToProductCart() {
+      if (this.$route.name != ROUTE_NAMES.PRODUCT_CART) {
+        this.$router.push({
+          name: ROUTE_NAMES.PRODUCT_CART,
+        });
+      }
+    },
+  },
+};
+</script>
 <style lang="scss" scoped>
 @use '/src/styles/abstracts/_variables.scss' as *;
 
