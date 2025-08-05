@@ -24,21 +24,21 @@
           ></i>
         </button>
 
-        <button
+        <router-link
+          to="/favourites"
           class="user-control-button"
-          @click="goToFavourites()"
         >
           <i
             class="ri-heart-line"
             style="color: #f5f5f5"
           ></i>
           <p
-            v-if="hasFavourites"
+            v-if="Object.keys(favouriteProducts).length > 0"
             class="favourite-list-count"
           >
-            {{ hasFavourites }}
+            {{ Object.keys(favouriteProducts).length }}
           </p>
-        </button>
+        </router-link>
         <button class="user-control-button">
           <i
             class="ri-shopping-cart-line"
@@ -53,21 +53,13 @@
   </header>
 </template>
 <script>
-import { mapGetters } from 'vuex';
-import { ROUTE_NAMES } from '@/constants/Routes';
+import { mapState } from 'vuex';
 
 export default {
   computed: {
-    ...mapGetters(['hasFavourites']),
-  },
-  methods: {
-    goToFavourites() {
-      if (this.$route.name !== ROUTE_NAMES.FAVOURITE_PRODUCTS) {
-        this.$router.push({
-          name: ROUTE_NAMES.FAVOURITE_PRODUCTS,
-        });
-      }
-    },
+    ...mapState({
+      favouriteProducts: (state) => state.product.favouriteProducts,
+    }),
   },
 };
 </script>
