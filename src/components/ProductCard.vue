@@ -47,11 +47,9 @@ export default {
     }),
 
     isFavourite() {
-      if (this.favouriteProducts[this.productData.id]) {
-        return 'ri-heart-fill';
-      } else {
-        return 'ri-heart-line';
-      }
+      return this.favouriteProducts[this.productData.id]
+        ? 'ri-heart-fill'
+        : 'ri-heart-line';
     },
   },
   methods: {
