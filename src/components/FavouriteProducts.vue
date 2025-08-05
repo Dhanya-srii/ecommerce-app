@@ -1,5 +1,5 @@
 <template>
-  <div v-if="hasFavourites === 0">
+  <div v-if="Object.keys(favouriteProducts).length === 0">
     <p
       class="product-status-message display-flex justify-content-center align-items-center"
     >
@@ -12,11 +12,11 @@
     class="product-list display-flex align-items-center flex-direction-column"
   >
     <product-specifications
-      :totalProducts="Object.keys(favouritesList).length"
+      :totalProducts="Object.keys(favouriteProducts).length"
     />
     <div class="products display-flex justify-content-start">
       <product-card
-        v-for="(product, index) in favouritesList"
+        v-for="(product, index) in favouriteProducts"
         :key="product.id || index"
         :productData="product"
       />
@@ -26,7 +26,7 @@
 
 <script>
 import ProductCard from './ProductCard.vue';
-import { mapGetters, mapState } from 'vuex';
+import { mapState } from 'vuex';
 import ProductSpecifications from './ProductSpecifications.vue';
 
 export default {
@@ -37,10 +37,8 @@ export default {
   },
   computed: {
     ...mapState({
-      favouritesList: (state) => state.product.favouritesList,
+      favouriteProducts: (state) => state.product.favouriteProducts,
     }),
-
-    ...mapGetters(['hasFavourites']),
   },
 };
 </script>
