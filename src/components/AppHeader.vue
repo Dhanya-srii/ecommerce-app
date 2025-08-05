@@ -25,7 +25,8 @@
         </button>
 
         <router-link
-          to="/favourites"
+          :to="{ name: ROUTE_NAMES.FAVOURITE_PRODUCTS }"
+          tag="button"
           class="user-control-button"
         >
           <i
@@ -53,9 +54,14 @@
   </header>
 </template>
 <script>
+import { ROUTE_NAMES } from '../constants/Routes';
 import { mapState } from 'vuex';
-
 export default {
+  data() {
+    return {
+      ROUTE_NAMES,
+    };
+  },
   computed: {
     ...mapState({
       favouriteProducts: (state) => state.product.favouriteProducts,
