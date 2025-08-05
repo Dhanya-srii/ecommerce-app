@@ -40,7 +40,11 @@
             {{ Object.keys(favouriteProducts).length }}
           </p>
         </router-link>
-        <button class="user-control-button">
+        <router-link
+          :to="{ name: ROUTE_NAMES.PRODUCT_CART }"
+          tag="button"
+          class="user-control-button"
+        >
           <i
             class="ri-shopping-cart-line"
             style="color: #f5f5f5"
@@ -51,7 +55,7 @@
           >
             {{ getCartProductsQuantity }}
           </p>
-        </button>
+        </router-link>
         <button class="user-control-button">
           <i class="ri-logout-circle-r-line"></i>
         </button>
@@ -71,6 +75,7 @@ export default {
   computed: {
     ...mapState({
       favouriteProducts: (state) => state.product.favouriteProducts,
+      getCartProductsQuantity: (state) => state.product.cartData.totalQuantity,
     }),
   },
 };
