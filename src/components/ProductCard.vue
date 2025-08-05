@@ -5,8 +5,11 @@
       @click="goToProductDetail(productData.id)"
     >
       <div class="image-container">
-        <button class="fav-icon">
-          <i class="ri-heart-line"></i>
+        <button
+          class="fav-icon"
+          @click.stop="updateFavProducts(productData)"
+        >
+          <i :class="isFavourite"></i>
         </button>
         <img
           class="product-image display-block"
@@ -32,6 +35,7 @@
   </div>
 </template>
 <script>
+import { mapMutations, mapState } from 'vuex';
 import { ROUTE_NAMES } from '../constants/Routes';
 
 export default {
@@ -42,15 +46,19 @@ export default {
       required: true,
     },
   },
-  methods: {
-    goToProductDetail(id) {
-      this.$router.push({
-        name: ROUTE_NAMES.PRODUCT_DETAIL,
-        query: {
-          id,
-        },
-      });
+  computed: {
+    ...mapState({
+      favouriteProducts: (state) => state.product.favouriteProducts,
+    }),
+
+    isFavourite() {
+      return this.favouriteProducts[this.productData.id]
+        ? 'ri-heart-fill'
+        : 'ri-heart-line';
     },
+  },
+  methods: {
+    ...mapMutations(['updateFavProducts']),
   },
 };
 </script>

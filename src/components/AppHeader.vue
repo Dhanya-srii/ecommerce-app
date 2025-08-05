@@ -24,16 +24,23 @@
           ></i>
         </button>
 
-        <button class="user-control-button">
+        <router-link
+          :to="{ name: ROUTE_NAMES.FAVOURITE_PRODUCTS }"
+          tag="button"
+          class="user-control-button"
+        >
           <i
             class="ri-heart-line"
             style="color: #f5f5f5"
           ></i>
-        </button>
-        <button
-          class="user-control-button"
-          @click="goToProductCart"
-        >
+          <p
+            v-if="Object.keys(favouriteProducts).length > 0"
+            class="favourite-list-count"
+          >
+            {{ Object.keys(favouriteProducts).length }}
+          </p>
+        </router-link>
+        <button class="user-control-button">
           <i
             class="ri-shopping-cart-line"
             style="color: #f5f5f5"
@@ -53,24 +60,18 @@
   </header>
 </template>
 <script>
-import { mapState } from 'vuex';
 import { ROUTE_NAMES } from '../constants/Routes';
-
+import { mapState } from 'vuex';
 export default {
+  data() {
+    return {
+      ROUTE_NAMES,
+    };
+  },
   computed: {
     ...mapState({
-      getCartProductsQuantity: (state) =>
-        state.product.cartData.totalQuantity,
+      favouriteProducts: (state) => state.product.favouriteProducts,
     }),
-  },
-  methods: {
-    goToProductCart() {
-      if (this.$route.name != ROUTE_NAMES.PRODUCT_CART) {
-        this.$router.push({
-          name: ROUTE_NAMES.PRODUCT_CART,
-        });
-      }
-    },
   },
 };
 </script>
@@ -105,7 +106,7 @@ export default {
 
 .favourite-list-count {
   position: absolute;
-  background-color: $isFav;
+  background-color: $fav-color;
   border-radius: 50%;
   height: 25px;
   width: 25px;

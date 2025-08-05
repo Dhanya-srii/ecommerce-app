@@ -1,9 +1,14 @@
+import Vue from 'vue';
 import { products } from '/src/api/products.js';
 import { cart } from '/src/api/cart.js';
 
 export const product = {
   state: {
-    productData: [],
+    favouriteProducts:
+      JSON.parse(localStorage.getItem('favouriteProducts')) || {},
+    productList: [],
+    selectedCategories: [],
+    showFilter: false,
     limit: 30,
     totalProducts: 0,
     cartData: JSON.parse(localStorage.getItem('cartProducts')) || {
@@ -14,8 +19,20 @@ export const product = {
     },
   },
   mutations: {
-    setProductData(state, products) {
-      state.productData = products;
+    updateFavProducts(state, product) {
+      const id = product.id;
+      if (state.favouriteProducts[id]) {
+        Vue.delete(state.favouriteProducts, id);
+      } else {
+        Vue.set(state.favouriteProducts, id, product);
+      }
+      localStorage.setItem(
+        'favouriteProducts',
+        JSON.stringify(state.favouriteProducts)
+      );
+    },
+    setProductList(state, products) {
+      state.productList = products;
     },
     setTotalProducts(state, total) {
       state.totalProducts = total;
@@ -23,30 +40,59 @@ export const product = {
     resetProductsList(state) {
       state.limit = 30;
       state.totalProducts = 0;
-      state.productData = [];
+      state.productList = [];
+    },
+
+    setSelectedCategories(state, categories) {
+      state.selectedCategories = categories;
+    },
+    clearSelectedCategories(state) {
+      state.selectedCategories = [];
     },
     setCart(state, carts) {
       state.cartData = { ...carts };
     },
+    removeOneSelectedCategory(state, category) {
+      state.selectedCategories = state.selectedCategories.filter(
+        (c) => c !== category
+      );
+    },
+    toggleFilter(state) {
+      state.showFilter = !state.showFilter;
+    },
   },
+
   actions: {
     async getAllProducts({ state, commit }) {
       try {
-        const currentLength = state.productData.length;
+        const currentLength = state.productList.length;
         if (currentLength < state.totalProducts || state.totalProducts === 0) {
           const { data: productsList } = await products.fetchAllProducts(
             state.limit,
             currentLength
           );
-          state.productData = state.productData.concat(productsList);
+          state.productList = state.productList.concat(productsList);
 
-          commit('setProductData', state.productData);
+          commit('setProductList', state.productList);
         }
 
-        return state.productData;
+        return state.productList;
       } catch (err) {
         alert('Error loading products: ' + err.message);
       }
+    },
+    async getAllProductsByCategories({ state, commit, dispatch }) {
+      if (state.selectedCategories.length === 0) {
+        commit('resetProductsList');
+        dispatch('getAllProducts');
+        return;
+      }
+
+      const { products: filtered, totalProducts } =
+        await products.fetchProductsCategories(state.selectedCategories);
+
+      commit('setTotalProducts', totalProducts);
+      commit('setProductList', filtered);
     },
 
     async updateCart({ commit, state }, newProduct) {
