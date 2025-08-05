@@ -4,9 +4,9 @@
       <div class="image-container">
         <button
           class="fav-icon"
-          @click.stop="updateFavList(productData)"
+          @click.stop="updateFavProducts(productData)"
         >
-          <i :class="[isFavourite ? 'ri-heart-fill' : 'ri-heart-line']"></i>
+          <i :class="isFavourite"></i>
         </button>
         <img
           class="product-image display-block"
@@ -43,15 +43,19 @@ export default {
   },
   computed: {
     ...mapState({
-      favouritesList: (state) => state.product.favouritesList,
+      favouriteProducts: (state) => state.product.favouriteProducts,
     }),
 
     isFavourite() {
-      return !!this.favouritesList[this.productData.id];
+      if (this.favouriteProducts[this.productData.id]) {
+        return 'ri-heart-fill';
+      } else {
+        return 'ri-heart-line';
+      }
     },
   },
   methods: {
-    ...mapMutations(['updateFavList']),
+    ...mapMutations(['updateFavProducts']),
   },
 };
 </script>
