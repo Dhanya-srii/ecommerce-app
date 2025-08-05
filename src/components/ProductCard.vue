@@ -49,6 +49,7 @@ export default {
   computed: {
     ...mapState({
       favouriteProducts: (state) => state.product.favouriteProducts,
+      getCartProductsQuantity: (state) => state.product.cartData.totalQuantity,
     }),
 
     isFavourite() {
@@ -59,6 +60,14 @@ export default {
   },
   methods: {
     ...mapMutations(['updateFavProducts']),
+    goToProductDetail(id) {
+      this.$router.push({
+        name: ROUTE_NAMES.PRODUCT_DETAIL,
+        query: {
+          id,
+        },
+      });
+    },
   },
 };
 </script>
