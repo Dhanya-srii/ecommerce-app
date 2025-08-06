@@ -30,7 +30,6 @@
           </p>
           <p class="card-price">${{ productData.price }}</p>
         </div>
-        <div></div>
       </div>
     </router-link>
   </div>
@@ -55,7 +54,6 @@ export default {
   computed: {
     ...mapState({
       favouriteProducts: (state) => state.product.favouriteProducts,
-
     }),
 
     isFavourite() {
