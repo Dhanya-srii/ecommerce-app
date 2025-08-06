@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { parseProduct } from './parser';
+import { parseProduct } from '@/api/parser';
 const BASE_URL = 'https://dummyjson.com/products';
 export const products = {
   /**
@@ -22,6 +22,24 @@ export const products = {
       throw new Error(err.message);
     }
   },
+
+  /**
+   * Fetches product data from the api.
+   * @param {string} productId The ID of the product to retrieve.
+   * @returns {object} The product data object.
+   */
+
+  async fetchProductData(productId) {
+    try {
+      const { data } = await axios.get(
+        `https://dummyjson.com/products/${productId}`
+      );
+      return parseProduct(data);
+    } catch (err) {
+      throw new Error(err.message);
+    }
+  },
+
   /**
    * retrieves the product data by price
    * @param {string} sort
@@ -33,7 +51,7 @@ export const products = {
       const { data } = await axios.get(
         `${BASE_URL}?sortBy=title&order=${sort}`
       );
-      return { data: data.products.map(parseProduct) };
+      return data.products.map(parseProduct);
     } catch (err) {
       throw new Error(err.message);
     }

@@ -44,8 +44,8 @@
 
 <script>
 import { mapMutations, mapActions } from 'vuex';
-import { user } from '../api/user';
-import { ROUTE_NAMES } from '../constants/Routes';
+import { user } from '@/api/user';
+import { ROUTE_NAMES } from '@/constants/Routes';
 
 export default {
   data() {
@@ -62,9 +62,9 @@ export default {
     async loginUserHandler() {
       try {
         const parsedUser = await user.loginUser(this.username, this.password);
-        
+
         this.setUser(parsedUser);
-        
+
         this.startSessionTimeout(this.$router);
         this.$router.push({ name: ROUTE_NAMES.PRODUCTS });
       } catch {

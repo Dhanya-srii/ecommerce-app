@@ -81,9 +81,9 @@
 </template>
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex';
-import ProductCard from './ProductCard.vue';
-import ProductSpecifications from './ProductSpecifications.vue';
-import { products } from '/src/api/products.js';
+import ProductCard from '@/components/product/ProductCard.vue';
+import ProductSpecifications from '@/components/product/ProductSpecifications.vue';
+import { products } from '@/api/products';
 export default {
   name: 'ProductListing',
   components: {
@@ -130,7 +130,7 @@ export default {
       'resetProductsList',
       'toggleFilter',
       'removeOneSelectedCategory',
-      'clearSelectedCategories'
+      'clearSelectedCategories',
     ]),
     ...mapActions(['getAllProducts', 'getAllProductsByCategories']),
 
@@ -144,7 +144,7 @@ export default {
             this.selectedOption
           );
           this.setTotalProducts(sortedProducts.length);
-          this.setProductList(sortedProducts.data);
+          this.setProductList(sortedProducts);
         } catch (err) {
           alert('Error fetching sorted products:', err.message);
         }

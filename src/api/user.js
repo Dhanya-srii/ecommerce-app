@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { parseUser } from './parser';
+import { parseUser } from '@/api/parser';
 
 export const user = {
   /**

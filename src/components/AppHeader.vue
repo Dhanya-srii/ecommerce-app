@@ -40,12 +40,22 @@
             {{ Object.keys(favouriteProducts).length }}
           </p>
         </router-link>
-        <button class="user-control-button">
+        <router-link
+          :to="{ name: ROUTE_NAMES.PRODUCT_CART }"
+          tag="button"
+          class="user-control-button"
+        >
           <i
             class="ri-shopping-cart-line"
             style="color: #f5f5f5"
           ></i>
-        </button>
+          <p
+            v-if="cartProductQuantity > 0"
+            class="favourite-list-count"
+          >
+            {{ cartProductQuantity }}
+          </p>
+        </router-link>
         <button class="user-control-button">
           <i class="ri-logout-circle-r-line"></i>
         </button>
@@ -54,7 +64,7 @@
   </header>
 </template>
 <script>
-import { ROUTE_NAMES } from '../constants/Routes';
+import { ROUTE_NAMES } from '@/constants/Routes';
 import { mapState } from 'vuex';
 export default {
   data() {
@@ -65,12 +75,18 @@ export default {
   computed: {
     ...mapState({
       favouriteProducts: (state) => state.product.favouriteProducts,
+      cartProductQuantity: (state) => state.product.cartData.totalQuantity,
     }),
   },
 };
 </script>
 <style lang="scss" scoped>
 @use '/src/styles/abstracts/_variables.scss' as *;
+
+.router-link-active {
+  background-color: grey;
+  border-radius: 50%;
+}
 
 .header-container {
   width: 100vw;

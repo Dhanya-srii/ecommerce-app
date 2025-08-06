@@ -1,6 +1,10 @@
 <template>
   <div class="product-card display-flex justify-content-center">
-    <div class="product">
+    <router-link
+      :to="{ name: ROUTE_NAMES.PRODUCT_DETAIL, query: { id: productData.id } }"
+      tag="div"
+      class="product"
+    >
       <div class="image-container">
         <button
           class="fav-icon"
@@ -26,15 +30,21 @@
           </p>
           <p class="card-price">${{ productData.price }}</p>
         </div>
-        <div></div>
       </div>
-    </div>
+    </router-link>
   </div>
 </template>
 <script>
 import { mapMutations, mapState } from 'vuex';
+import { ROUTE_NAMES } from '@/constants/Routes';
+
 export default {
   name: 'ProductCard',
+  data() {
+    return {
+      ROUTE_NAMES,
+    };
+  },
   props: {
     productData: {
       type: Object,
