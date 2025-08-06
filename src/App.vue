@@ -9,7 +9,7 @@
 <script>
 import { mapActions, mapMutations, mapState } from 'vuex';
 import AppHeader from './components/AppHeader.vue';
-import CategoryFilter from './components/CategoryFilter.vue';
+import CategoryFilter from './components/product/CategoryFilter.vue';
 
 import { ROUTE_NAMES } from './constants/Routes';
 export default {

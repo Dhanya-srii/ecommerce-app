@@ -2,10 +2,10 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import { ROUTE_NAMES } from '@/constants/Routes';
 import LoginPage from '@/components/LoginPage.vue';
-import ProductsList from '@/components/ProductsList.vue';
-import FavouriteProducts from '@/components/FavouriteProducts.vue';
-import ProductDetails from '@/components/ProductDetails.vue';
-import ProductCart from '@/components/ProductCartList.vue';
+import ProductsList from '@/components/product/ProductsList.vue';
+import FavouriteProducts from '@/components/product/FavouriteProducts.vue';
+import ProductDetails from '@/components/product/ProductDetails.vue';
+import ProductCart from '@/components/cart/CartItemList.vue';
 
 Vue.use(VueRouter);
 const routes = [
