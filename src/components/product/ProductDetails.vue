@@ -1,12 +1,12 @@
 <template>
-  <loading-indicator v-if="isLoading" />
+  <app-loading v-if="isLoading" />
 
   <div
     v-else
     class="product-container display-flex justify-content-center align-items-start"
   >
     <button
-      @click="goBackRoute"
+      @click="handleBack"
       class="back-button"
     >
       <i class="ri-arrow-left-line"></i>
@@ -37,7 +37,6 @@
     </div>
 
     <div class="product-details display-flex flex-direction-column">
-      <p class="brand-title">EVERYDAY HUMANS</p>
       <p class="product-title">{{ selectedProduct.title }}</p>
       <el-rate
         v-model="value"
@@ -53,7 +52,7 @@
         <div
           class="action-buttons display-flex align-items-center justify-content-start"
         >
-          <div v-if="!amount">
+          <div v-if="!productQuantity">
             <button
               class="addCart-details"
               @click="updateCart(selectedProduct)"
@@ -74,7 +73,7 @@
               -
             </button>
 
-            <span>{{ amount }}</span>
+            <span>{{ productQuantity }}</span>
             <button
               class="counter-button"
               @click="updateCart({ id: selectedProduct.id, quantityChange: 1 })"
@@ -96,8 +95,8 @@
 
 <script>
 import { mapActions, mapState, mapMutations } from 'vuex';
-import { products } from '../../api/products';
-import LoadingIndicator from '../utility/LoadingIndicator.vue';
+import { products } from '@/api/products';
+import AppLoading from '@/components/utility/AppLoading.vue';
 
 export default {
   name: 'ProductDetail',
@@ -110,7 +109,7 @@ export default {
     };
   },
   components: {
-    LoadingIndicator,
+    AppLoading,
   },
   async created() {
     await this.getProductdata();
@@ -120,7 +119,7 @@ export default {
       cartProducts: (state) => state.product.cartData.products,
       favouriteProducts: (state) => state.product.favouriteProducts,
     }),
-    amount() {
+    productQuantity() {
       const product = this.cartProducts?.find(
         (p) => p.id === this.selectedProduct.id
       );
@@ -149,7 +148,7 @@ export default {
         this.isLoading = false;
       }
     },
-    goBackRoute() {
+    handleBack() {
       this.$router.go(-1);
     },
     handleHeroImage(image) {
@@ -205,11 +204,6 @@ export default {
   flex: 1;
   gap: 3rem;
   transition: ease 1s;
-}
-
-.brand-title {
-  color: #808080;
-  font-size: 0.9rem;
 }
 
 .product-title {
