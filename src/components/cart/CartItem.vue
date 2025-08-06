@@ -1,10 +1,10 @@
 <template>
   <div class="cart-item display-flex justify-content-start">
     <div
-      class="cart-item-image display-flex align-items-center flex-direction-column"
+      class="cart-item-image-container display-flex align-items-center flex-direction-column"
     >
       <img
-        class="cart-image"
+        class="item-image"
         :src="product.images[0]"
         alt="Product image"
       />
@@ -46,7 +46,7 @@
         </div>
       </div>
       <div
-        class="cart-item-side display-flex align-items-center flex-direction-column"
+        class="cart-item-controls display-flex align-items-center flex-direction-column"
       >
         <p class="cart-item-price">
           ${{ (product.price * product.quantity).toFixed(2) }}
@@ -91,11 +91,11 @@ export default {
   border: 1px solid #e2dddd;
   height: 230px;
 
-  &-image {
+  &-image-container {
     width: 20%;
     background-color: #eeee;
 
-    .cart-image {
+    .item-image {
       height: 150px;
       width: 180px;
     }
@@ -144,7 +144,7 @@ export default {
     font-size: 16px;
   }
 
-  &-side {
+  &-controls {
     gap: 32px;
   }
 
