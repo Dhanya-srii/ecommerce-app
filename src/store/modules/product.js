@@ -60,6 +60,14 @@ export const product = {
     toggleFilter(state) {
       state.showFilter = !state.showFilter;
     },
+    resetCartData(state) {
+      state.cartData = {
+        products: [],
+        total: 0,
+        discountedTotal: 0,
+        totalQuantity: 0,
+      };
+    },
   },
 
   actions: {
@@ -75,7 +83,6 @@ export const product = {
 
           commit('setProductList', state.productList);
         }
-
         return state.productList;
       } catch (err) {
         alert('Error loading products: ' + err.message);
@@ -95,21 +102,21 @@ export const product = {
       commit('setProductList', filtered);
     },
 
-    async updateCart({ commit, state }, newProduct) {
+    async updateCart({ commit, state }, cartItem) {
       let carts = state.cartData.products;
-      if (newProduct.remove) {
-        carts = carts.filter((p) => p.id !== newProduct.id);
+      if (cartItem.remove) {
+        carts = carts.filter((p) => p.id !== cartItem.id);
       } else {
-        if (newProduct.quantityChange) {
-          const existing = carts.find((p) => p.id === newProduct.id);
-          if (existing) {
-            existing.quantity += newProduct.quantityChange;
-            if (existing.quantity < 1) {
-              carts = carts.filter((p) => p.id !== newProduct.id);
+        if (cartItem.quantityChange) {
+          const existingCartItem = carts.find((p) => p.id === cartItem.id);
+          if (existingCartItem) {
+            existingCartItem.quantity += cartItem.quantityChange;
+            if (existingCartItem.quantity < 1) {
+              carts = carts.filter((p) => p.id !== cartItem.id);
             }
           }
         } else {
-          carts.push({ ...newProduct, quantity: 1 });
+          carts.push({ ...cartItem, quantity: 1 });
         }
       }
       if (carts.length > 0) {
@@ -118,17 +125,13 @@ export const product = {
             userId: 5,
             products: carts.map((p) => ({ id: p.id, quantity: p.quantity })),
           });
-          commit('setCart', response.data);
+
+          commit('setCart', response);
         } catch (err) {
           alert('Error syncing carts: ' + err.message);
         }
       } else {
-        commit('setCart', {
-          products: [],
-          total: 0,
-          discountedTotal: 0,
-          totalQuantity: 0,
-        });
+        commit('resetCartData');
       }
       state.cartData.products = carts;
       localStorage.setItem('cartProducts', JSON.stringify(state.cartData));
