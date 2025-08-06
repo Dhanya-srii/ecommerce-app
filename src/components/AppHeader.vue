@@ -50,10 +50,10 @@
             style="color: #f5f5f5"
           ></i>
           <p
-            v-if="getCartProductsQuantity"
+            v-if="cartItemQuantity"
             class="favourite-list-count"
           >
-            {{ getCartProductsQuantity }}
+            {{ cartItemQuantity }}
           </p>
         </router-link>
         <button class="user-control-button">
@@ -75,13 +75,18 @@ export default {
   computed: {
     ...mapState({
       favouriteProducts: (state) => state.product.favouriteProducts,
-      getCartProductsQuantity: (state) => state.product.cartData.totalQuantity,
+      cartItemQuantity: (state) => state.product.cartData.totalQuantity,
     }),
   },
 };
 </script>
 <style lang="scss" scoped>
 @use '/src/styles/abstracts/_variables.scss' as *;
+
+.router-link-active {
+  background-color: grey;
+  border-radius: 50%;
+}
 
 .header-container {
   width: 100vw;
