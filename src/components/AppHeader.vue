@@ -33,18 +33,38 @@
           ></i>
         </button>
 
-        <button class="user-control-button">
+        <router-link
+          :to="{ name: ROUTE_NAMES.FAVOURITE_PRODUCTS }"
+          tag="button"
+          class="user-control-button"
+        >
           <i
             class="ri-heart-line"
             style="color: #f5f5f5"
           ></i>
-        </button>
-        <button class="user-control-button">
+          <p
+            v-if="Object.keys(favouriteProducts).length > 0"
+            class="favourite-list-count"
+          >
+            {{ Object.keys(favouriteProducts).length }}
+          </p>
+        </router-link>
+        <router-link
+          :to="{ name: ROUTE_NAMES.PRODUCT_CART }"
+          tag="button"
+          class="user-control-button"
+        >
           <i
             class="ri-shopping-cart-line"
             style="color: #f5f5f5"
           ></i>
-        </button>
+          <p
+            v-if="cartProductQuantity > 0"
+            class="favourite-list-count"
+          >
+            {{ cartProductQuantity }}
+          </p>
+        </router-link>
         <button class="user-control-button">
           <i class="ri-logout-circle-r-line"></i>
         </button>
@@ -53,14 +73,22 @@
   </header>
 </template>
 <script>
-import { mapActions, mapMutations } from 'vuex';
+import { mapActions, mapMutations, mapState } from 'vuex';
+import { ROUTE_NAMES } from '@/constants/Routes';
 
 export default {
   data() {
     return {
       searchQuery: '',
       showClear: false,
+      ROUTE_NAMES,
     };
+  },
+  computed: {
+    ...mapState({
+      favouriteProducts: (state) => state.product.favouriteProducts,
+      cartProductQuantity: (state) => state.product.cartData.totalQuantity,
+    }),
   },
   methods: {
     ...mapMutations([
@@ -100,6 +128,11 @@ export default {
 </script>
 <style lang="scss" scoped>
 @use '/src/styles/abstracts/_variables.scss' as *;
+
+.router-link-active {
+  background-color: grey;
+  border-radius: 50%;
+}
 
 .header-container {
   width: 100vw;
