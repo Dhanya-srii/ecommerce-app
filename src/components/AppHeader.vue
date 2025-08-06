@@ -50,7 +50,7 @@
             style="color: #f5f5f5"
           ></i>
           <p
-            v-if="cartProductQuantity.length > 0"
+            v-if="cartProductQuantity > 0"
             class="favourite-list-count"
           >
             {{ cartProductQuantity }}
