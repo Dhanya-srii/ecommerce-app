@@ -9,6 +9,7 @@ export const product = {
     showFilter: false,
     limit: 30,
     totalProducts: 0,
+    gridColumns: 4,
   },
   mutations: {
     updateFavProducts(state, product) {
@@ -34,7 +35,9 @@ export const product = {
       state.totalProducts = 0;
       state.productList = [];
     },
-
+    setGridColumns(state, cols) {
+      state.gridColumns = cols;
+    },
     setSelectedCategories(state, categories) {
       state.selectedCategories = categories;
     },

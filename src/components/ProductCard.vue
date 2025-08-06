@@ -102,4 +102,27 @@ export default {
     color: brown;
   }
 }
+.grid-2 {
+  .product-card {
+    max-width: 50%;
+    flex: 50%;
+  }
+
+  .product {
+    min-height: 600px;
+    min-width: 765px;
+
+    .product-image {
+      padding: 16px;
+      width: 500px;
+      height: 500px;
+      object-fit: cover;
+    }
+  }
+
+  .sub-product-info {
+    gap: 16px;
+    min-width: 760px;
+  }
+}
 </style>

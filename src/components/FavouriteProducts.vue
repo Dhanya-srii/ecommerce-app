@@ -14,7 +14,12 @@
     <product-specifications
       :totalProducts="Object.keys(favouriteProducts).length"
     />
-    <div class="products display-flex justify-content-start">
+    <div
+      :class="[
+        'products display-flex justify-content-start',
+        `grid-${gridColumns}`,
+      ]"
+    >
       <product-card
         v-for="(product, index) in favouriteProducts"
         :key="product.id || index"
@@ -37,6 +42,7 @@ export default {
   },
   computed: {
     ...mapState({
+      gridColumns: (state) => state.product.gridColumns,
       favouriteProducts: (state) => state.product.favouriteProducts,
     }),
   },
