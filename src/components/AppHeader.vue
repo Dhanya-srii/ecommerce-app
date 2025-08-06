@@ -71,14 +71,16 @@ export default {
     ...mapActions(['getAllProducts', 'getSearchProducts']),
     async searchProduct() {
       if (!this.searchQuery) return;
-      try {
-        this.setSearchProduct(this.searchQuery);
-        this.resetProductsList();
-        const results = await this.getAllProducts();
-        this.setProductList(results);
-        this.showClear = true;
-      } catch (error) {
-        alert('Error Searching Product: ' + error.message);
+      else {
+        try {
+          this.setSearchProduct(this.searchQuery);
+          this.resetProductsList();
+          const results = await this.getAllProducts();
+          this.setProductList(results);
+          this.showClear = true;
+        } catch (error) {
+          alert('Error Searching Product: ' + error.message);
+        }
       }
     },
     async clearSearch() {
