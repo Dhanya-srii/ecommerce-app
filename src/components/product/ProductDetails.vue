@@ -52,7 +52,7 @@
         <div
           class="action-buttons display-flex align-items-center justify-content-start"
         >
-          <div v-if="!productQuantity">
+          <div v-if="productQuantity === 0 ">
             <button
               class="addCart-details"
               @click="updateCart(selectedProduct)"
