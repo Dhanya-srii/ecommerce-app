@@ -64,7 +64,7 @@
 
 <script>
 import { mapMutations, mapActions, mapState, mapGetters } from 'vuex';
-import { products } from '../api/products';
+import { products } from '../../api/products';
 export default {
   data() {
     return {

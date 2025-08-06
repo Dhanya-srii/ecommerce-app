@@ -1,8 +1,9 @@
 <template>
   <div class="product-card display-flex justify-content-center">
-    <div
+    <router-link
+      :to="{ name: ROUTE_NAMES.PRODUCT_DETAIL, query: { id: productData.id } }"
+      tag="div"
       class="product"
-      @click="goToProductDetail(productData.id)"
     >
       <div class="image-container">
         <button
@@ -31,15 +32,20 @@
         </div>
         <div></div>
       </div>
-    </div>
+    </router-link>
   </div>
 </template>
 <script>
 import { mapMutations, mapState } from 'vuex';
-import { ROUTE_NAMES } from '../constants/Routes';
+import { ROUTE_NAMES } from '@/constants/Routes';
 
 export default {
   name: 'ProductCard',
+  data() {
+    return {
+      ROUTE_NAMES,
+    };
+  },
   props: {
     productData: {
       type: Object,
@@ -60,14 +66,7 @@ export default {
   },
   methods: {
     ...mapMutations(['updateFavProducts']),
-    goToProductDetail(id) {
-      this.$router.push({
-        name: ROUTE_NAMES.PRODUCT_DETAIL,
-        query: {
-          id,
-        },
-      });
-    },
+ 
   },
 };
 </script>

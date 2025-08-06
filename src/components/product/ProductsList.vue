@@ -83,7 +83,7 @@
 import { mapState, mapActions, mapMutations } from 'vuex';
 import ProductCard from './ProductCard.vue';
 import ProductSpecifications from './ProductSpecifications.vue';
-import { products } from '/src/api/products.js';
+import { products } from '@/api/products';
 export default {
   name: 'ProductListing',
   components: {
@@ -118,7 +118,7 @@ export default {
 
   async created() {
     try {
-      await this.getAllProducts();
+      await this.getAllProducts();      
     } catch (error) {
       alert('Error loading products:', error);
     }
@@ -142,9 +142,9 @@ export default {
         try {
           const sortedProducts = await products.fetchProductsByPrice(
             this.selectedOption
-          );
+          );          
           this.setTotalProducts(sortedProducts.length);
-          this.setProductList(sortedProducts.data);
+          this.setProductList(sortedProducts);
         } catch (err) {
           alert('Error fetching sorted products:', err.message);
         }

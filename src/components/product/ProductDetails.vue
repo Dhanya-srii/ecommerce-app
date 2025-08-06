@@ -1,5 +1,5 @@
 <template>
-  <loading-data v-if="isLoading" />
+  <loading-indicator v-if="isLoading" />
 
   <div
     v-else
@@ -83,9 +83,10 @@
             </button>
           </div>
           <button
+            @click="updateFavProducts(selectedProduct)"
             class="fav-detail display-flex align-items-center justify-content-center"
           >
-            <i class="ri-heart-line"></i>
+            <i :class="isFavourite"></i>
           </button>
         </div>
       </div>
@@ -94,9 +95,9 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
-import { products } from '../api/products';
-import LoadingData from './LoadingData.vue';
+import { mapActions, mapState, mapMutations } from 'vuex';
+import { products } from '../../api/products';
+import LoadingIndicator from '../LoadingIndicator.vue';
 
 export default {
   name: 'ProductDetail',
@@ -109,7 +110,7 @@ export default {
     };
   },
   components: {
-    LoadingData,
+    LoadingIndicator,
   },
   async created() {
     await this.getProductdata();
@@ -117,6 +118,7 @@ export default {
   computed: {
     ...mapState({
       cartProducts: (state) => state.product.cartData.products,
+      favouriteProducts: (state) => state.product.favouriteProducts,
     }),
     amount() {
       const product = this.cartProducts?.find(
@@ -124,8 +126,15 @@ export default {
       );
       return product ? product.quantity : 0;
     },
+    isFavourite() {
+      return this.favouriteProducts[this.selectedProduct.id]
+        ? 'ri-heart-fill'
+        : 'ri-heart-line';
+    },
   },
   methods: {
+    ...mapMutations(['updateFavProducts']),
+
     ...mapActions(['updateCart']),
     async getProductdata() {
       try {

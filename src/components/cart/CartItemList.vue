@@ -2,7 +2,7 @@
   <div class="cart display-flex align-items-center justify-content-center">
     <p
       class="product-status-message display-flex justify-content-center align-items-center"
-      v-if="getAddedCartProducts.products.length === 0"
+      v-if="cartData.products.length === 0"
     >
       No items in cart.
     </p>
@@ -12,15 +12,13 @@
     >
       <p class="cart-title">
         My Shopping Cart
-        <span class="item-count"
-          >({{ getAddedCartProducts.products.length || 0 }})</span
-        >
+        <span class="item-count">({{ cartData.products.length || 0 }})</span>
       </p>
 
       <div class="cart-content display-flex">
         <div class="cart-items display-flex flex-direction-column">
           <product-cart
-            v-for="product in getAddedCartProducts.products"
+            v-for="product in cartData.products"
             :key="product.id"
             :product="product"
           />
@@ -43,10 +41,7 @@
             <p class="discount-info display-flex justify-content-space-between">
               <span class="discount-title">Extra 15% off applied</span>
               <span class="discount-amount">{{
-                (
-                  getAddedCartProducts.total -
-                  getAddedCartProducts.discountedTotal
-                ).toFixed(2)
+                (cartData.total - cartData.discountedTotal).toFixed(2)
               }}</span>
             </p>
             <div class="price-details">
@@ -54,7 +49,7 @@
                 class="sub-price-details display-flex justify-content-space-between"
               >
                 <span>Subtotal</span>
-                <span>${{ getAddedCartProducts.total.toFixed(2) }}</span>
+                <span>${{ cartData.total.toFixed(2) }}</span>
               </p>
               <p
                 class="sub-price-details display-flex justify-content-space-between"
@@ -68,10 +63,7 @@
                 <span>order discount</span>
                 <span
                   >${{
-                    (
-                      getAddedCartProducts.total -
-                      getAddedCartProducts.discountedTotal
-                    ).toFixed(2)
+                    (cartData.total - cartData.discountedTotal).toFixed(2)
                   }}</span
                 >
               </p>
@@ -83,7 +75,7 @@
               Grand Total
               <span class="gst-note">Prices include GST</span>
             </p>
-            <p>${{ getAddedCartProducts.discountedTotal }}</p>
+            <p>${{ cartData.discountedTotal }}</p>
           </div>
 
           <button class="checkout-button">Checkout</button>
@@ -108,14 +100,14 @@
 </template>
 
 <script>
-import ProductCart from './ProductCart.vue';
+import ProductCart from './CartItem.vue';
 import { mapState } from 'vuex';
 export default {
   name: 'ProductCartList',
   components: { ProductCart },
   computed: {
     ...mapState({
-      getAddedCartProducts: (state) => state.product.cartData,
+      cartData: (state) => state.product.cartData,
     }),
   },
 };
@@ -126,38 +118,37 @@ export default {
 
 .cart {
   width: 100vw;
-}
-.cart-wrapper {
-  min-width: 1600px;
-  min-height: 700px;
-  gap: 32px;
-  margin: 24px;
-}
 
-.cart-title {
-  font-size: 32px;
-  font-weight: bold;
-  text-transform: uppercase;
-}
+  &-wrapper {
+    min-width: 1600px;
+    min-height: 700px;
+    gap: 32px;
+    margin: 24px;
+  }
 
-.cart-content {
-  gap: 24px;
-}
+  &-title {
+    font-size: 32px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
 
-.cart-items {
-  width: 60%;
-  gap: 16px;
-}
+  &-content {
+    gap: 24px;
+  }
 
+  &-items {
+    width: 60%;
+    gap: 16px;
+  }
+
+  &-summary {
+    width: 40%;
+  }
+}
 .item-count {
   color: gray;
   font-weight: 300;
 }
-
-.cart-summary {
-  width: 40%;
-}
-
 .free-shipping,
 .free-returns {
   border: 1px solid #d0caca;
