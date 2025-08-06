@@ -51,7 +51,7 @@ export const products = {
       const { data } = await axios.get(
         `${BASE_URL}?sortBy=title&order=${sort}`
       );
-      return { data: data.products.map(parseProduct) };
+      return data.products.map(parseProduct);
     } catch (err) {
       throw new Error(err.message);
     }
