@@ -7,16 +7,16 @@ export const cart = {
    * @returns {Promise<object>} A promise that resolves with the added cart product data.
    */
 
-  async addCart(data) {
+  async addCart(productData) {
     try {
-      const response = await axios.post(
-        `https://dummyjson.com/carts/add`,
-        data,
+      const { data } = await axios.post(
+        'https://dummyjson.com/carts/add',
+        productData,
         {
           headers: { 'Content-Type': 'application/json' },
         }
       );
-      return response;
+      return data;
     } catch (err) {
       throw new Error(err);
     }
