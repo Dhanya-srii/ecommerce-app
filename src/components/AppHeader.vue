@@ -50,10 +50,10 @@
             style="color: #f5f5f5"
           ></i>
           <p
-            v-if="cartItemQuantity"
+            v-if="cartProductQuantity.length > 0"
             class="favourite-list-count"
           >
-            {{ cartItemQuantity }}
+            {{ cartProductQuantity }}
           </p>
         </router-link>
         <button class="user-control-button">
@@ -75,7 +75,7 @@ export default {
   computed: {
     ...mapState({
       favouriteProducts: (state) => state.product.favouriteProducts,
-      cartItemQuantity: (state) => state.product.cartData.totalQuantity,
+      cartProductQuantity: (state) => state.product.cartData.totalQuantity,
     }),
   },
 };
