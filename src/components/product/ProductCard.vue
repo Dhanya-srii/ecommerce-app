@@ -55,7 +55,7 @@ export default {
   computed: {
     ...mapState({
       favouriteProducts: (state) => state.product.favouriteProducts,
-      getCartProductsQuantity: (state) => state.product.cartData.totalQuantity,
+
     }),
 
     isFavourite() {
@@ -66,7 +66,6 @@ export default {
   },
   methods: {
     ...mapMutations(['updateFavProducts']),
- 
   },
 };
 </script>
