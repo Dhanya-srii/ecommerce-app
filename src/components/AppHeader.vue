@@ -3,9 +3,12 @@
     <div
       class="sub-header-container display-flex justify-content-space-between align-items-center"
     >
-      <div>
+      <router-link
+        :to="{ name: ROUTE_NAMES.PRODUCTS }"
+        tag="div"
+      >
         <p class="product-brand">PLUGO</p>
-      </div>
+      </router-link>
       <div
         class="user-control-container display-flex justify-content-center align-items-center"
       >
