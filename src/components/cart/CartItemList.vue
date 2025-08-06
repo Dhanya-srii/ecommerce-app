@@ -17,7 +17,7 @@
 
       <div class="cart-content display-flex">
         <div class="cart-items display-flex flex-direction-column">
-          <product-cart
+          <cart-item
             v-for="product in cartData.products"
             :key="product.id"
             :product="product"
@@ -100,11 +100,11 @@
 </template>
 
 <script>
-import ProductCart from './CartItem.vue';
+import CartItem from '@/components/cart/CartItem.vue';
 import { mapState } from 'vuex';
 export default {
   name: 'ProductCartList',
-  components: { ProductCart },
+  components: { CartItem },
   computed: {
     ...mapState({
       cartData: (state) => state.product.cartData,
