@@ -1,14 +1,37 @@
-import { products } from '/src/api/products.js';
+import Vue from 'vue';
+import { products } from '@/api/products';
+import { cart } from '@/api/cart';
+
 export const product = {
   state: {
+    favouriteProducts:
+      JSON.parse(localStorage.getItem('favouriteProducts')) || {},
     productList: [],
     selectedCategories: [],
     searchProduct: '',
     showFilter: false,
     limit: 30,
     totalProducts: 0,
+    cartData: JSON.parse(localStorage.getItem('cartProducts')) || {
+      products: [],
+      total: 0,
+      discountedTotal: 0,
+      totalQuantity: 0,
+    },
   },
   mutations: {
+    updateFavProducts(state, product) {
+      const id = product.id;
+      if (state.favouriteProducts[id]) {
+        Vue.delete(state.favouriteProducts, id);
+      } else {
+        Vue.set(state.favouriteProducts, id, product);
+      }
+      localStorage.setItem(
+        'favouriteProducts',
+        JSON.stringify(state.favouriteProducts)
+      );
+    },
     setProductList(state, products) {
       state.productList = products;
     },
@@ -30,6 +53,9 @@ export const product = {
     clearSelectedCategories(state) {
       state.selectedCategories = [];
     },
+    setCart(state, cartData) {
+      state.cartData = { ...cartData };
+    },
     removeOneSelectedCategory(state, category) {
       state.selectedCategories = state.selectedCategories.filter(
         (c) => c !== category
@@ -38,7 +64,16 @@ export const product = {
     toggleFilter(state) {
       state.showFilter = !state.showFilter;
     },
+    resetCart(state) {
+      state.cartData = {
+        products: [],
+        total: 0,
+        discountedTotal: 0,
+        totalQuantity: 0,
+      };
+    },
   },
+
   actions: {
     async getAllProducts({ state, commit }) {
       try {
@@ -53,7 +88,6 @@ export const product = {
 
           commit('setProductList', state.productList);
         }
-
         return state.productList;
       } catch (err) {
         alert('Error loading products: ' + err.message);
@@ -71,6 +105,41 @@ export const product = {
 
       commit('setTotalProducts', totalProducts);
       commit('setProductList', filtered);
+    },
+
+    async updateCart({ commit, state }, cartItem) {
+      let cartData = state.cartData.products;
+      if (cartItem.remove) {
+        cartData = cartData.filter((p) => p.id !== cartItem.id);
+      } else {
+        if (cartItem.quantityChange) {
+          const existingCartItem = cartData.find((p) => p.id === cartItem.id);
+          if (existingCartItem) {
+            existingCartItem.quantity += cartItem.quantityChange;
+            if (existingCartItem.quantity < 1) {
+              cartData = cartData.filter((p) => p.id !== cartItem.id);
+            }
+          }
+        } else {
+          cartData.push({ ...cartItem, quantity: 1 });
+        }
+      }
+      if (cartData.length > 0) {
+        try {
+          const response = await cart.addCart({
+            userId: 5,
+            products: cartData.map((p) => ({ id: p.id, quantity: p.quantity })),
+          });
+
+          commit('setCart', response);
+        } catch (err) {
+          alert('Error syncing carts: ' + err.message);
+        }
+      } else {
+        commit('resetCart');
+      }
+      state.cartData.products = cartData;
+      localStorage.setItem('cartProducts', JSON.stringify(state.cartData));
     },
   },
 };
