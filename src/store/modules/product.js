@@ -1,6 +1,6 @@
 import Vue from 'vue';
-import { products } from '/src/api/products.js';
-import { cart } from '/src/api/cart.js';
+import { products } from '@/api/products';
+import { cart } from '@/api/cart';
 
 export const product = {
   state: {
@@ -49,8 +49,8 @@ export const product = {
     clearSelectedCategories(state) {
       state.selectedCategories = [];
     },
-    setCart(state, carts) {
-      state.cartData = { ...carts };
+    setCart(state, cartData) {
+      state.cartData = { ...cartData };
     },
     removeOneSelectedCategory(state, category) {
       state.selectedCategories = state.selectedCategories.filter(
@@ -60,7 +60,7 @@ export const product = {
     toggleFilter(state) {
       state.showFilter = !state.showFilter;
     },
-    resetCartData(state) {
+    resetCart(state) {
       state.cartData = {
         products: [],
         total: 0,
@@ -103,27 +103,27 @@ export const product = {
     },
 
     async updateCart({ commit, state }, cartItem) {
-      let carts = state.cartData.products;
+      let cartData = state.cartData.products;
       if (cartItem.remove) {
-        carts = carts.filter((p) => p.id !== cartItem.id);
+        cartData = cartData.filter((p) => p.id !== cartItem.id);
       } else {
         if (cartItem.quantityChange) {
-          const existingCartItem = carts.find((p) => p.id === cartItem.id);
+          const existingCartItem = cartData.find((p) => p.id === cartItem.id);
           if (existingCartItem) {
             existingCartItem.quantity += cartItem.quantityChange;
             if (existingCartItem.quantity < 1) {
-              carts = carts.filter((p) => p.id !== cartItem.id);
+              cartData = cartData.filter((p) => p.id !== cartItem.id);
             }
           }
         } else {
-          carts.push({ ...cartItem, quantity: 1 });
+          cartData.push({ ...cartItem, quantity: 1 });
         }
       }
-      if (carts.length > 0) {
+      if (cartData.length > 0) {
         try {
           const response = await cart.addCart({
             userId: 5,
-            products: carts.map((p) => ({ id: p.id, quantity: p.quantity })),
+            products: cartData.map((p) => ({ id: p.id, quantity: p.quantity })),
           });
 
           commit('setCart', response);
@@ -131,9 +131,9 @@ export const product = {
           alert('Error syncing carts: ' + err.message);
         }
       } else {
-        commit('resetCartData');
+        commit('resetCart');
       }
-      state.cartData.products = carts;
+      state.cartData.products = cartData;
       localStorage.setItem('cartProducts', JSON.stringify(state.cartData));
     },
   },

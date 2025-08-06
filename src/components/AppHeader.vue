@@ -64,7 +64,7 @@
   </header>
 </template>
 <script>
-import { ROUTE_NAMES } from '../constants/Routes';
+import { ROUTE_NAMES } from '@/constants/Routes';
 import { mapState } from 'vuex';
 export default {
   data() {

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { parseProduct } from './parser';
+import { parseProduct } from '@/api/parser';
 const BASE_URL = 'https://dummyjson.com/products';
 export const products = {
   /**
