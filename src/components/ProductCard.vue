@@ -103,20 +103,19 @@ export default {
   }
 }
 .grid-2 {
-  .product-card {
-    max-width: 50%;
-    flex: 50%;
-  }
-
   .product {
     min-height: 600px;
     min-width: 765px;
 
-    .product-image {
+    &-image {
       padding: 16px;
       width: 500px;
       height: 500px;
       object-fit: cover;
+    }
+    &-card {
+      max-width: 50%;
+      flex: 50%;
     }
   }
 
