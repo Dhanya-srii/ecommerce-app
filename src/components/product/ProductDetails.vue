@@ -97,7 +97,7 @@
 <script>
 import { mapActions, mapState, mapMutations } from 'vuex';
 import { products } from '../../api/products';
-import LoadingIndicator from '../LoadingIndicator.vue';
+import LoadingIndicator from '../utility/LoadingIndicator.vue';
 
 export default {
   name: 'ProductDetail',
