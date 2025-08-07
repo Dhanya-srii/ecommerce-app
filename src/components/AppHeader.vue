@@ -13,7 +13,7 @@
           class="search-input"
           type="text"
           placeholder="SEARCH"
-          v-model.trim="searchQuery"
+          v-model.trim="searchedProduct"
           @keyup.enter="searchProduct"
         />
         <button
@@ -59,10 +59,10 @@
             style="color: #f5f5f5"
           ></i>
           <p
-            v-if="cartProductQuantity > 0"
+            v-if="cartItemQuantity > 0"
             class="favourite-list-count"
           >
-            {{ cartProductQuantity }}
+            {{ cartItemQuantity }}
           </p>
         </router-link>
         <button class="user-control-button">
@@ -79,7 +79,6 @@ import { ROUTE_NAMES } from '@/constants/Routes';
 export default {
   data() {
     return {
-      searchQuery: '',
       showClear: false,
       ROUTE_NAMES,
     };
@@ -87,8 +86,17 @@ export default {
   computed: {
     ...mapState({
       favouriteProducts: (state) => state.product.favouriteProducts,
-      cartProductQuantity: (state) => state.product.cartData.totalQuantity,
+      cartItemQuantity: (state) => state.product.cartData.totalQuantity,
+      searchQuery: (state) => state.product.searchQuery,
     }),
+    searchedProduct: {
+      get() {
+        return this.searchQuery;
+      },
+      set(value) {
+        this.setSearchProduct(value);
+      },
+    },
   },
   methods: {
     ...mapMutations([
@@ -98,13 +106,12 @@ export default {
     ]),
     ...mapActions(['getAllProducts', 'getSearchProducts']),
     async searchProduct() {
-      if (!this.searchQuery) return;
+      if (!this.searchedProduct) return;
       else {
         try {
-          this.setSearchProduct(this.searchQuery);
           this.resetProductsList();
-          const results = await this.getAllProducts();
-          this.setProductList(results);
+          const searchedProduct = await this.getAllProducts();
+          this.setProductList(searchedProduct);
           this.showClear = true;
         } catch (error) {
           alert('Error Searching Product: ' + error.message);
@@ -113,11 +120,9 @@ export default {
     },
     async clearSearch() {
       try {
-        this.searchQuery = '';
-        this.setSearchProduct('');
         this.resetProductsList();
-        const results = await this.getAllProducts();
-        this.setProductList(results);
+        const allProducts = await this.getAllProducts();
+        this.setProductList(allProducts);
         this.showClear = false;
       } catch (error) {
         alert('Error loading products: ' + error.message);
@@ -125,6 +130,7 @@ export default {
     },
   },
 };
+
 </script>
 <style lang="scss" scoped>
 @use '/src/styles/abstracts/_variables.scss' as *;
