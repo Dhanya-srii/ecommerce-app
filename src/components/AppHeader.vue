@@ -5,9 +5,10 @@
     >
       <router-link
         :to="{ name: ROUTE_NAMES.PRODUCTS }"
-        tag="div"
+        tag="p"
+        class="product-brand"
       >
-        <p class="product-brand">PLUGO</p>
+        PLUGO
       </router-link>
       <div
         class="user-control-container display-flex justify-content-center align-items-center"
@@ -133,7 +134,6 @@ export default {
     },
   },
 };
-
 </script>
 <style lang="scss" scoped>
 @use '/src/styles/abstracts/_variables.scss' as *;
