@@ -7,19 +7,15 @@
     </div>
     <div>
       <button
-        :class="[
-          'grid-button',
-          { active: gridColumns === setGridView.TWO_COLUMNS },
-        ]"
+        class="grid-button"
+        :class="[{ active: gridColumns === setGridView.TWO_COLUMNS }]"
         @click="setGridColumns(setGridView.TWO_COLUMNS)"
       >
         <i class="ri-layout-grid-line"></i>
       </button>
       <button
-        :class="[
-          'grid-button',
-          { active: gridColumns === setGridView.FOUR_COLUMNS },
-        ]"
+        class="grid-button"
+        :class="[{ active: gridColumns === setGridView.FOUR_COLUMNS }]"
         @click="setGridColumns(setGridView.FOUR_COLUMNS)"
       >
         <i class="ri-layout-grid-2-line"></i>
