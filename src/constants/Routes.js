@@ -3,5 +3,5 @@ export const ROUTE_NAMES = {
   LOGIN_PAGE: 'LoginPage',
   FAVOURITE_PRODUCTS: 'FavouriteProducts',
   PRODUCT_DETAIL: 'ProductDetails',
-  PRODUCT_CART: 'ProductCart',
+  CART_ITEM_LIST: 'CartItemList',
 };

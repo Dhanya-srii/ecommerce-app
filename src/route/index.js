@@ -5,7 +5,7 @@ import LoginPage from '@/components/LoginPage.vue';
 import ProductsList from '@/components/product/ProductsList.vue';
 import FavouriteProducts from '@/components/product/FavouriteProducts.vue';
 import ProductDetails from '@/components/product/ProductDetails.vue';
-import ProductCart from '@/components/cart/CartItemList.vue';
+import CartItemList from '@/components/cart/CartItemList.vue';
 
 Vue.use(VueRouter);
 const routes = [
@@ -35,8 +35,8 @@ const routes = [
   },
   {
     path: '/cart',
-    component: ProductCart,
-    name: ROUTE_NAMES.PRODUCT_CART,
+    component: CartItemList,
+    name: ROUTE_NAMES.CART_ITEM_LIST,
   },
 ];
 

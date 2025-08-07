@@ -54,7 +54,7 @@
           </p>
         </router-link>
         <router-link
-          :to="{ name: ROUTE_NAMES.PRODUCT_CART }"
+          :to="{ name: ROUTE_NAMES.CART_ITEM_LIST }"
           tag="button"
           class="user-control-button"
         >
