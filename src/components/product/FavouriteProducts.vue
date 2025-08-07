@@ -15,10 +15,8 @@
       :totalProducts="Object.keys(favouriteProducts).length"
     />
     <div
-      :class="[
-        'products display-flex justify-content-start',
-        `grid-${gridColumns}`,
-      ]"
+      class="products display-flex justify-content-start"
+      :class="[`grid-${gridColumns}`]"
     >
       <product-card
         v-for="(product, index) in favouriteProducts"
