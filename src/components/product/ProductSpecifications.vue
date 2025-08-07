@@ -29,7 +29,7 @@
 </template>
 <script>
 import { mapState, mapMutations } from 'vuex';
-import { SET_GRID_VIEW } from '../constants/ProductGrid';
+import { SET_GRID_VIEW } from '@/constants/ProductGrid';
 
 export default {
   props: {
