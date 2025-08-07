@@ -1,24 +1,24 @@
 <template>
   <div id="app">
     <app-header v-if="!canShowHeader" />
-    <category-filter v-if="showFilter" />
+    <product-filter v-if="showFilter" />
     <router-view />
   </div>
 </template>
 
 <script>
 import { mapActions, mapMutations, mapState } from 'vuex';
-import AppHeader from './components/AppHeader.vue';
-import CategoryFilter from './components/CategoryFilter.vue';
+import AppHeader from '@/components/AppHeader.vue';
+import ProductFilter from '@/components/product/ProductFilter.vue';
 
-import { ROUTE_NAMES } from './constants/Routes';
+import { ROUTE_NAMES } from '@/constants/Routes';
 export default {
   created() {
     this.checkSession();
   },
   components: {
     AppHeader,
-    CategoryFilter,
+    ProductFilter,
   },
   watch: {
     '$route.name': {

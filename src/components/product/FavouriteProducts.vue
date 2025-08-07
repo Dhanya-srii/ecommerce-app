@@ -30,9 +30,9 @@
 </template>
 
 <script>
-import ProductCard from './ProductCard.vue';
+import ProductCard from '@/components/product/ProductCard.vue';
 import { mapState } from 'vuex';
-import ProductSpecifications from './ProductSpecifications.vue';
+import ProductSpecifications from '@/components/product/ProductSpecifications.vue';
 
 export default {
   name: 'FavouriteProducts',

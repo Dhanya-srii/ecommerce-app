@@ -16,11 +16,20 @@
           class="search-input"
           type="text"
           placeholder="SEARCH"
+          v-model.trim="searchedProduct"
+          @keyup.enter="searchProduct"
         />
-        <button class="user-control-button">
+        <button
+          @click="searchProduct"
+          class="user-control-button"
+        >
           <i class="ri-search-line"></i>
         </button>
-        <button class="user-control-button">
+        <button
+          class="user-control-button"
+          v-if="showClear"
+          @click="clearSearch"
+        >
           <i
             class="ri-eraser-line"
             style="color: #f5f5f5"
@@ -43,12 +52,22 @@
             {{ Object.keys(favouriteProducts).length }}
           </p>
         </router-link>
-        <button class="user-control-button">
+        <router-link
+          :to="{ name: ROUTE_NAMES.PRODUCT_CART }"
+          tag="button"
+          class="user-control-button"
+        >
           <i
             class="ri-shopping-cart-line"
             style="color: #f5f5f5"
           ></i>
-        </button>
+          <p
+            v-if="cartItemQuantity > 0"
+            class="favourite-list-count"
+          >
+            {{ cartItemQuantity }}
+          </p>
+        </router-link>
         <button class="user-control-button">
           <i class="ri-logout-circle-r-line"></i>
         </button>
@@ -57,23 +76,72 @@
   </header>
 </template>
 <script>
-import { ROUTE_NAMES } from '../constants/Routes';
-import { mapState } from 'vuex';
+import { mapActions, mapMutations, mapState } from 'vuex';
+import { ROUTE_NAMES } from '@/constants/Routes';
+
 export default {
   data() {
     return {
+      showClear: false,
       ROUTE_NAMES,
     };
   },
   computed: {
     ...mapState({
       favouriteProducts: (state) => state.product.favouriteProducts,
+      cartItemQuantity: (state) => state.product.cartData.totalQuantity,
+      searchQuery: (state) => state.product.searchQuery,
     }),
+    searchedProduct: {
+      get() {
+        return this.searchQuery;
+      },
+      set(value) {
+        this.setSearchProduct(value);
+      },
+    },
+  },
+  methods: {
+    ...mapMutations([
+      'setProductList',
+      'resetProductsList',
+      'setSearchProduct',
+    ]),
+    ...mapActions(['getAllProducts', 'getSearchProducts']),
+    async searchProduct() {
+      if (!this.searchedProduct) return;
+      else {
+        try {
+          this.resetProductsList();
+          const searchedProduct = await this.getAllProducts();
+          this.setProductList(searchedProduct);
+          this.showClear = true;
+        } catch (error) {
+          alert('Error Searching Product: ' + error.message);
+        }
+      }
+    },
+    async clearSearch() {
+      try {
+        this.resetProductsList();
+        const allProducts = await this.getAllProducts();
+        this.setProductList(allProducts);
+        this.showClear = false;
+      } catch (error) {
+        alert('Error loading products: ' + error.message);
+      }
+    },
   },
 };
+
 </script>
 <style lang="scss" scoped>
 @use '/src/styles/abstracts/_variables.scss' as *;
+
+.router-link-active {
+  background-color: grey;
+  border-radius: 50%;
+}
 
 .header-container {
   width: 100vw;
