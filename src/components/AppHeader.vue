@@ -138,7 +138,7 @@ export default {
 <style lang="scss" scoped>
 @use '/src/styles/abstracts/_variables.scss' as *;
 
-.router-link-active {
+.user-control-button.router-link-active {
   background-color: grey;
   border-radius: 50%;
 }
