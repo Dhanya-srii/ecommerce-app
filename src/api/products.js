@@ -1,16 +1,21 @@
 import axios from 'axios';
 import { parseProduct } from '@/api/parser';
-const BASE_URL = 'https://dummyjson.com/products';
+let BASE_URL = 'https://dummyjson.com/products';
 export const products = {
   /**
-   * retrieves a paginated list of product data.
-   * @param {Number} limit The maximum number of products to return.
-   * @param {Number} skip The number of products to skip from the beginning of the list.
-   * @returns {Promise<Object[]>} A promise that resolves to an array of product objects.
+   * Retrieves a paginated list of product data.
+   * @param {number} limit The maximum number of products to return.
+   * @param {number} skip The number of products to skip from the beginning of the list.
+   * @param {string} searchQuery The search term to filter products by.
+   * @returns {Promise<Array>} A promise that resolves to an array of product objects.
    */
 
-  async fetchAllProducts(limit, skip) {
-    let productUrl = `${BASE_URL}?limit=${limit}&skip=${skip}`;
+  async fetchAllProducts(limit, skip, searchQuery) {
+    let productUrl =
+      BASE_URL +
+      `${
+        searchQuery ? `/search?q=${searchQuery}&` : '?'
+      }limit=${limit}&skip=${skip}`;
 
     try {
       const { data } = await axios.get(productUrl);

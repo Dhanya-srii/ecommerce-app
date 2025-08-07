@@ -8,6 +8,7 @@ export const product = {
       JSON.parse(localStorage.getItem('favouriteProducts')) || {},
     productList: [],
     selectedCategories: [],
+    searchQuery: '',
     showFilter: false,
     limit: 30,
     totalProducts: 0,
@@ -36,6 +37,9 @@ export const product = {
     },
     setTotalProducts(state, total) {
       state.totalProducts = total;
+    },
+    setSearchProduct(state, search) {
+      state.searchQuery = search;
     },
     resetProductsList(state) {
       state.limit = 30;
@@ -77,7 +81,8 @@ export const product = {
         if (currentLength < state.totalProducts || state.totalProducts === 0) {
           const { data: productsList } = await products.fetchAllProducts(
             state.limit,
-            currentLength
+            currentLength,
+            state.searchQuery
           );
           state.productList = state.productList.concat(productsList);
 
