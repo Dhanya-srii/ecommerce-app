@@ -7,7 +7,11 @@
       class="filters-panel display-flex flex-direction-column"
       @click.stop
     >
-      <div class="categories display-flex flex-direction-column">
+      <app-loading v-if="isLoading" />
+      <div
+        v-else
+        class="categories display-flex flex-direction-column"
+      >
         <div
           class="filters-panel-header display-flex align-items-center justify-content-space-between"
         >
@@ -65,11 +69,14 @@
 <script>
 import { mapMutations, mapActions, mapState, mapGetters } from 'vuex';
 import { products } from '@/api/products';
+import AppLoading from '@/components/utility/AppLoading.vue';
 export default {
+  components: { AppLoading },
   data() {
     return {
       categoryList: [],
       selectedCategories: [],
+      isLoading: true,
     };
   },
 
@@ -82,11 +89,14 @@ export default {
 
   async created() {
     try {
+      this.isLoading = true;
       const categoryData = await products.fetchCategory();
       this.categoryList = categoryData;
       this.selectedCategories = this.cachedCategories;
     } catch (err) {
       alert('Error loading products: ' + err.message);
+    } finally {
+      this.isLoading = false;
     }
   },
 

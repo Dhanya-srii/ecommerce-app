@@ -1,5 +1,7 @@
 <template>
+  <app-loading v-if="isLoading" />
   <div
+    v-else
     v-lazy:30="getAllProducts"
     class="product-list display-flex align-items-center flex-direction-column"
   >
@@ -85,14 +87,17 @@ import { mapState, mapActions, mapMutations } from 'vuex';
 import ProductCard from '@/components/product/ProductCard.vue';
 import ProductSpecifications from '@/components/product/ProductSpecifications.vue';
 import { products } from '@/api/products';
+import AppLoading from '@/components/utility/AppLoading.vue';
 export default {
   name: 'ProductListing',
   components: {
     ProductCard,
     ProductSpecifications,
+    AppLoading,
   },
   data() {
     return {
+      isLoading: true,
       selectedOption: '',
       sortingOption: [
         {
@@ -120,9 +125,12 @@ export default {
 
   async created() {
     try {
+      this.isLoading = true;
       await this.getAllProducts();
     } catch (error) {
       alert('Error loading products:', error);
+    } finally {
+      this.isLoading = false;
     }
   },
   methods: {
