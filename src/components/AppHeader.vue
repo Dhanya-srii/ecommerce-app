@@ -3,9 +3,13 @@
     <div
       class="sub-header-container display-flex justify-content-space-between align-items-center"
     >
-      <div>
-        <p class="product-brand">PLUGO</p>
-      </div>
+      <router-link
+        :to="{ name: ROUTE_NAMES.PRODUCTS }"
+        tag="p"
+        class="product-brand"
+      >
+        PLUGO
+      </router-link>
       <div
         class="user-control-container display-flex justify-content-center align-items-center"
       >
@@ -50,7 +54,7 @@
           </p>
         </router-link>
         <router-link
-          :to="{ name: ROUTE_NAMES.PRODUCT_CART }"
+          :to="{ name: ROUTE_NAMES.CART_ITEM_LIST }"
           tag="button"
           class="user-control-button"
         >
@@ -130,12 +134,11 @@ export default {
     },
   },
 };
-
 </script>
 <style lang="scss" scoped>
 @use '/src/styles/abstracts/_variables.scss' as *;
 
-.router-link-active {
+.user-control-button.router-link-active {
   background-color: grey;
   border-radius: 50%;
 }

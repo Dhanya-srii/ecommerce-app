@@ -103,7 +103,7 @@
 import CartItem from '@/components/cart/CartItem.vue';
 import { mapState } from 'vuex';
 export default {
-  name: 'ProductCartList',
+  name: 'CartItemList',
   components: { CartItem },
   computed: {
     ...mapState({

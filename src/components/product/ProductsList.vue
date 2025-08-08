@@ -63,6 +63,7 @@
     <div
       v-if="productList.length > 0"
       class="products display-flex justify-content-start"
+      :class="[`grid-${gridColumns}`]"
     >
       <product-card
         v-for="(product, index) in productList"
@@ -113,6 +114,7 @@ export default {
     ...mapState({
       productList: (state) => state.product.productList,
       selectedCategories: (state) => state.product.selectedCategories,
+      gridColumns: (state) => state.product.gridColumns,
     }),
   },
 
