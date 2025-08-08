@@ -69,7 +69,10 @@
             {{ cartItemQuantity }}
           </p>
         </router-link>
-        <button class="user-control-button">
+        <button
+          class="user-control-button"
+          @click="toLogout()"
+        >
           <i class="ri-logout-circle-r-line"></i>
         </button>
       </div>
@@ -108,7 +111,13 @@ export default {
       'resetProductsList',
       'setSearchProduct',
     ]),
-    ...mapActions(['getAllProducts', 'getSearchProducts']),
+    ...mapActions(['logout', 'getAllProducts', 'getSearchProducts']),
+    toLogout() {
+      this.logout();
+      this.$router.push({
+        name: ROUTE_NAMES.LOGIN_PAGE,
+      });
+    },
     async searchProduct() {
       if (!this.searchedProduct) return;
       else {
@@ -124,6 +133,7 @@ export default {
     },
     async clearSearch() {
       try {
+        this.searchedProduct = '';
         this.resetProductsList();
         const allProducts = await this.getAllProducts();
         this.setProductList(allProducts);
