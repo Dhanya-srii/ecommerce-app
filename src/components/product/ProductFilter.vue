@@ -44,7 +44,7 @@
         </div>
 
         <div
-          class="filter-panel-footer display-flex align-items-center justify-content-center flex-direction-column"
+          class="filters-panel-footer display-flex align-items-center justify-content-center flex-direction-column"
         >
           <button
             class="clear-all"
@@ -135,36 +135,35 @@ export default {
   z-index: 1000;
   width: 450px;
   height: 100vh;
+  
+  &-title {
+    font-weight: 600;
+    font-size: 1.17em;
+    padding: 16px;
+  }
+  &-header {
+    width: 100%;
+    border-bottom: 1px solid rgb(236, 233, 233);
+  }
+
+  &-body {
+    gap: 2rem;
+    padding: 16px;
+  }
+
+  &-footer {
+    gap: 16px;
+    min-width: 420px;
+    min-height: 130px;
+    position: sticky;
+    bottom: 0;
+    z-index: 1000;
+    background-color: $secondary-color;
+  }
 }
 
 .categories {
   overflow-y: scroll;
   position: relative;
-}
-
-.filters-panel-header {
-  width: 100%;
-  border-bottom: 1px solid rgb(236, 233, 233);
-
-  .filters-panel-title {
-    font-weight: 600;
-    font-size: 1.17em;
-    padding: 16px;
-  }
-}
-
-.filters-panel-body {
-  gap: 2rem;
-  padding: 16px;
-}
-
-.filter-panel-footer {
-  gap: 16px;
-  min-width: 420px;
-  min-height: 130px;
-  position: sticky;
-  bottom: 0;
-  z-index: 1000;
-  background-color: $secondary-color;
 }
 </style>
