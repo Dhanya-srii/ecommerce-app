@@ -71,7 +71,7 @@
         </router-link>
         <button
           class="user-control-button"
-          @click="toLogout()"
+          @click="handleLogout()"
         >
           <i class="ri-logout-circle-r-line"></i>
         </button>
@@ -112,7 +112,7 @@ export default {
       'setSearchProduct',
     ]),
     ...mapActions(['logout', 'getAllProducts', 'getSearchProducts']),
-    toLogout() {
+    handleLogout() {
       this.logout();
       this.$router.push({
         name: ROUTE_NAMES.LOGIN_PAGE,
