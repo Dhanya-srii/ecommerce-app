@@ -96,7 +96,6 @@
 <script>
 import { mapActions, mapState, mapMutations } from 'vuex';
 import { products } from '@/api/products';
-import AppLoading from '@/components/utility/AppLoading.vue';
 
 export default {
   name: 'ProductDetail',
@@ -108,9 +107,7 @@ export default {
       isLoading: true,
     };
   },
-  components: {
-    AppLoading,
-  },
+
   async created() {
     await this.getProductdata();
   },
