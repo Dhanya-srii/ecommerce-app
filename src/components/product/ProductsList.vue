@@ -87,13 +87,12 @@ import { mapState, mapActions, mapMutations } from 'vuex';
 import ProductCard from '@/components/product/ProductCard.vue';
 import ProductSpecifications from '@/components/product/ProductSpecifications.vue';
 import { products } from '@/api/products';
-import AppLoading from '@/components/utility/AppLoading.vue';
+
 export default {
   name: 'ProductListing',
   components: {
     ProductCard,
     ProductSpecifications,
-    AppLoading,
   },
   data() {
     return {

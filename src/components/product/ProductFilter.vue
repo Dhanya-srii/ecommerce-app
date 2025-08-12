@@ -69,9 +69,7 @@
 <script>
 import { mapMutations, mapActions, mapState, mapGetters } from 'vuex';
 import { products } from '@/api/products';
-import AppLoading from '@/components/utility/AppLoading.vue';
 export default {
-  components: { AppLoading },
   data() {
     return {
       categoryList: [],
